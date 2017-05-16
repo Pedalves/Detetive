@@ -23,7 +23,7 @@ public class MainWindow implements Observer
 	{				
 		window = new JFrame("Detetive");
 		
-		window.setSize(400, 400);
+		window.setSize(900, 740);
 		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
