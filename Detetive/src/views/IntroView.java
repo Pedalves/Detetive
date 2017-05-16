@@ -18,6 +18,8 @@ import javax.imageio.ImageIO;
 
 import views.ViewObservable;
 import views.NewGameView;
+import views.GameView;
+
 
 public class IntroView extends JPanel 
 {	
@@ -74,9 +76,7 @@ public class IntroView extends JPanel
 		    
 		    if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 		    {
-		       System.out.println(chooser.getSelectedFile().getName());
-		       // TODO
-		       this.observable.changePanel(new NewGameView(this.mainWindow));
+		       this.observable.changePanel(new GameView(chooser.getSelectedFile().getName()));
 		    }		
 		});
 		
