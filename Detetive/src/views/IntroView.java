@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,7 +27,6 @@ public class IntroView extends JPanel
 {	
 	private static final long serialVersionUID = 1L;
 
-	private final Observer mainWindow;
 	private final ViewObservable observable;
 	private BufferedImage bgImage;
 	       	
@@ -42,7 +43,6 @@ public class IntroView extends JPanel
 		
 		this.observable = new ViewObservable();
 		this.observable.addObserver(mainWindow);
-		this.mainWindow = mainWindow;
 		
 		try
 		{
@@ -63,7 +63,7 @@ public class IntroView extends JPanel
 		JButton newButton = new JButton("Novo Jogo");
 		newButton.setAlignmentX(Component.CENTER_ALIGNMENT);		
 		newButton.addActionListener(e -> {
-			this.observable.changePanel(new NewGameView(this.mainWindow));
+			this.observable.changePanel(new NewGameView(this.observable));
 		});
 		
 
@@ -81,10 +81,11 @@ public class IntroView extends JPanel
 		});
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-		setBorder(BorderFactory.createEmptyBorder(200, 120, 200, 120));
+		
+		setBorder(BorderFactory.createEmptyBorder(350, 0, 0, 0));
 		
 		add(newButton);
+		add(Box.createRigidArea(new Dimension(0, 30)));
 		add(continueButton);
 	}
 }
