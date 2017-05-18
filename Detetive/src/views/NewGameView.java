@@ -2,14 +2,23 @@ package views;
 
 import javax.swing.JButton;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
 @SuppressWarnings("serial")
-public class NewGameView extends View 
+public class NewGameView extends View implements ItemListener
 {	
-
 	private JButton startButton;
+	
+	JCheckBox greenButton;
+	JCheckBox mustardButton;
+	JCheckBox peacockButton;
+	JCheckBox plumButton;
+	JCheckBox scarletButton;
+	JCheckBox whiteButton;
 	
 	private int numPlayers = 0;
 
@@ -20,130 +29,23 @@ public class NewGameView extends View
 
 	public void setupUI()
 	{
-		JCheckBox greenButton = new JCheckBox("greenButton");
-		greenButton.addActionListener(e -> {
-			if(greenButton.isSelected())
-			{
-				numPlayers++;
-				if(numPlayers >= 3)
-				{
-					startButton.setEnabled(true);
-				}
-			}
-			else
-			{
-				numPlayers--;
-				if(numPlayers < 3)
-				{
-					startButton.setEnabled(false);
-				}
-			}
-		});
+		greenButton = new JCheckBox("greenButton");
+		mustardButton = new JCheckBox("mustardButton");
+		peacockButton = new JCheckBox("peacockButton");
+		plumButton = new JCheckBox("plumButton");
+		scarletButton = new JCheckBox("scarletButton");
+		whiteButton = new JCheckBox("whiteButton");
 		
-		JCheckBox mustardButton = new JCheckBox("mustardButton");
-		mustardButton.addActionListener(e -> {
-			if(mustardButton.isSelected())
-			{
-				numPlayers++;
-				if(numPlayers >= 3)
-				{
-					startButton.setEnabled(true);
-				}
-			}
-			else
-			{
-				numPlayers--;
-				if(numPlayers < 3)
-				{
-					startButton.setEnabled(false);
-				}
-			}
-		});
-		
-		JCheckBox peacockButton = new JCheckBox("peacockButton");
-		peacockButton.addActionListener(e -> {
-			if(peacockButton.isSelected())
-			{
-				numPlayers++;
-				if(numPlayers >= 3)
-				{
-					startButton.setEnabled(true);
-				}
-			}
-			else
-			{
-				numPlayers--;
-				if(numPlayers < 3)
-				{
-					startButton.setEnabled(false);
-				}
-			}
-		});
-		
-		JCheckBox plumButton = new JCheckBox("plumButton");
-		plumButton.addActionListener(e -> {
-			if(plumButton.isSelected())
-			{
-				numPlayers++;
-				if(numPlayers >= 3)
-				{
-					startButton.setEnabled(true);
-				}
-			}
-			else
-			{
-				numPlayers--;
-				if(numPlayers < 3)
-				{
-					startButton.setEnabled(false);
-				}
-			}
-		});
-		
-		JCheckBox scarletButton = new JCheckBox("scarletButton");
-		scarletButton.addActionListener(e -> {
-			if(scarletButton.isSelected())
-			{
-				numPlayers++;
-				if(numPlayers >= 3)
-				{
-					startButton.setEnabled(true);
-				}
-			}
-			else
-			{
-				numPlayers--;
-				if(numPlayers < 3)
-				{
-					startButton.setEnabled(false);
-				}
-			}
-		});
-		
-		JCheckBox whiteButton = new JCheckBox("whiteButton");
-		whiteButton.addActionListener(e -> {
-			if(whiteButton.isSelected())
-			{
-				numPlayers++;
-				if(numPlayers >= 3)
-				{
-					startButton.setEnabled(true);
-				}
-			}
-			else
-			{
-				numPlayers--;
-				if(numPlayers < 3)
-				{
-					startButton.setEnabled(false);
-				}
-			}
-		});
-		
+		greenButton.addItemListener(this);
+		mustardButton.addItemListener(this);
+		peacockButton.addItemListener(this);
+		plumButton.addItemListener(this);
+		scarletButton.addItemListener(this);
+		whiteButton.addItemListener(this);		
 		
 		startButton = new JButton("Começar o jogo");
 		startButton.addActionListener(e -> {
-			this.observable.changePanel(new GameView());
+			observable.changePanel(new GameView());
 		});
 		startButton.setEnabled(false);
 		
@@ -157,5 +59,32 @@ public class NewGameView extends View
 		add(whiteButton);
 		
 		add(startButton);
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) 
+	{
+		Object source = e.getItemSelectable();
+		JCheckBox tmp = (JCheckBox)source;
+		
+		if ((source == greenButton) || (source == mustardButton) || (source == peacockButton) || (source == plumButton) || (source == scarletButton) || (source == whiteButton)) 
+		{
+           if(tmp.isSelected())
+           {
+        	   numPlayers++;
+        	   if(numPlayers >= 3)
+        	   {
+        		   startButton.setEnabled(true);
+        	   }
+           }
+           else
+           {
+        	   numPlayers--;
+        	   if(numPlayers < 3)
+        	   {
+        		   startButton.setEnabled(false);
+        	   }
+           }
+        }
 	}
 }
