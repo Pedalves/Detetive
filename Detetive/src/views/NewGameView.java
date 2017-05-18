@@ -3,28 +3,19 @@ package views;
 import javax.swing.JButton;
 
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 
-import views.ViewObservable;
-
-public class NewGameView extends JPanel 
+@SuppressWarnings("serial")
+public class NewGameView extends View 
 {	
-	private static final long serialVersionUID = 1L;
-
-	private final ViewObservable observable;
 
 	private JButton startButton;
 	
 	private int numPlayers = 0;
 
-	public NewGameView(ViewObservable observable)
+	public NewGameView()
 	{
 		super();
-
-		this.observable = observable;
-
-		setupUI();
 	}
 
 	public void setupUI()

@@ -5,14 +5,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JPanel;
 import javax.imageio.ImageIO;
 
 
-public class GameView extends JPanel 
+@SuppressWarnings("serial")
+public class GameView extends View 
 {	
-	private static final long serialVersionUID = 1L;
-
 	private BufferedImage bgImage;
 	private String gameFile;
 	       	
@@ -42,5 +40,11 @@ public class GameView extends JPanel
 		this();
 
 		this.gameFile = gameFile;		
+	}
+
+	@Override
+	public void setupUI() 
+	{
+		
 	}
 }

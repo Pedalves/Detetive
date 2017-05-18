@@ -14,20 +14,16 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.imageio.ImageIO;
 
-import views.ViewObservable;
 import views.NewGameView;
 import views.GameView;
 
 
-public class IntroView extends JPanel 
+@SuppressWarnings("serial")
+public class IntroView extends View 
 {	
-	private static final long serialVersionUID = 1L;
-
-	private final ViewObservable observable;
 	private BufferedImage bgImage;
 	       	
 	@Override
@@ -41,8 +37,7 @@ public class IntroView extends JPanel
 	{
 		super();
 		
-		this.observable = new ViewObservable();
-		this.observable.addObserver(mainWindow);
+		observable.addObserver(mainWindow);
 		
 		try
 		{
@@ -52,10 +47,7 @@ public class IntroView extends JPanel
 		{
 			System.out.println("ERRO ao carregar imagem");
 		}
-		
-		setupUI();
-		
-		this.observable.changePanel(this);
+		observable.changePanel(this);
 	}
 
 	public void setupUI()
@@ -63,7 +55,7 @@ public class IntroView extends JPanel
 		JButton newButton = new JButton("Novo Jogo");
 		newButton.setAlignmentX(Component.CENTER_ALIGNMENT);		
 		newButton.addActionListener(e -> {
-			this.observable.changePanel(new NewGameView(this.observable));
+			observable.changePanel(new NewGameView());
 		});
 		
 
@@ -76,7 +68,7 @@ public class IntroView extends JPanel
 		    
 		    if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 		    {
-		       this.observable.changePanel(new GameView(chooser.getSelectedFile().getName()));
+		       observable.changePanel(new GameView(chooser.getSelectedFile().getName()));
 		    }		
 		});
 		
