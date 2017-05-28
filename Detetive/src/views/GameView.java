@@ -95,6 +95,13 @@ public class GameView extends View
 			repaint();
 		});
 		
+		JButton testWindowButton = new JButton("Escolher valor do dado");
+		testWindowButton.setAlignmentX(Component.CENTER_ALIGNMENT);		
+		testWindowButton.addActionListener(e -> {
+			new PlayTestView();
+		});
+		
 		add(diceButton);
+		add(testWindowButton);
 	}
 }
