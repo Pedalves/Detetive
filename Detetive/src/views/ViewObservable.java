@@ -15,5 +15,4 @@ public class ViewObservable extends Observable
 		setChanged();
 		notifyObservers(panel);
 	}
-	
 }

@@ -1,6 +1,7 @@
 package util;
 
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 
@@ -13,8 +14,13 @@ public class Grafo<E>
 		graph = new HashMap<E, LinkedList<E>>();
 	}
 	
-	public Queue<E> bfs(int level, E rootPosition)
+	public ArrayList<E> bfs(int level, E rootPosition) throws Exception
 	{
+		if(!graph.containsKey(rootPosition))
+		{
+			throw new Exception("Invalid rootPosition");
+		}
+		
 		Queue<E> queue = new LinkedList<E>();
 		
 		queue.add(rootPosition);
@@ -34,10 +40,11 @@ public class Grafo<E>
 			}
 			
 			queue = tempQueue;
-			tempQueue.clear();
 		}
-				
-		return queue;
+		ArrayList<E> available = new ArrayList<>();
+		queue.forEach(available::add);
+		
+		return available;
 	}
 	
 	public void addVertex(E node)
@@ -54,5 +61,37 @@ public class Grafo<E>
 	private LinkedList<E> getChildren(E node)
 	{
 		return graph.get(node);
+	}
+	
+	public static void main(String arg[])
+	{		
+		Grafo<Integer> g = new Grafo<Integer>();  
+		
+		g.addVertex(1);
+		g.addVertex(2);
+		g.addVertex(3);
+		g.addVertex(4);
+		g.addVertex(5);
+		g.addVertex(6);
+		
+		g.addEdge(1, 2);
+		g.addEdge(2, 3);
+		g.addEdge(3, 4);
+		g.addEdge(3, 5);
+		g.addEdge(4, 5);
+		g.addEdge(4, 6);
+		g.addEdge(5, 6);
+		
+		ArrayList<Integer> q = null;
+		try {
+			q = g.bfs(3, 1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		q.forEach(item -> {
+			System.out.println(item);
+		});
 	}
 }

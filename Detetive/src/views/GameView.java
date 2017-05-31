@@ -1,20 +1,28 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.MouseListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
 import jogo.Dice;
+import jogo.Facade;
 import jogo.Player;
 
 
 @SuppressWarnings("serial")
-public class GameView extends View 
+public class GameView extends View
 {	
 	private BufferedImage bgImage;
 	private String gameFile;
@@ -23,25 +31,23 @@ public class GameView extends View
 	private Dice dice;
 	private BufferedImage diceImage;
 	
-	private Player player1;
-	private Player player2;
-	private Player player3;
-	private Player player4;
-	private Player player5;
-	private Player player6;
+	private Facade _facade;
+	
+	private HashMap<Integer, Player> players;
 	       	
 	public GameView()
 	{
 		super();
 		
-		player1 = new Player("Green", 405, 50);
-		player2 = new Player("Mustard", 55, 475);
-		player3 = new Player("Peacock", 630, 200);
-		player4 = new Player("Plum", 630, 525);
-		player5 = new Player("Scarlet", 230, 652);
-		player6 = new Player("White", 280, 50);
+		_facade = new Facade(this);
+		
+		players = new HashMap<Integer, Player>();
+		
+		players.put(0, new Player(405, 50));
 		
 		dice = new Dice();
+		
+		addMouseListener(_facade);
 		
 		try
 		{
@@ -66,16 +72,11 @@ public class GameView extends View
 	    super.paintComponent(g);
 	    g.drawImage(bgImage, 0, 0, null);
 	    
-	    //Players
-	    if(player1 != null)
-	    {
-		    g.drawImage(player1.pawnImage, player1.PosX, player1.PosY, null);
-		    g.drawImage(player2.pawnImage, player2.PosX, player2.PosY, null);
-		    g.drawImage(player3.pawnImage, player3.PosX, player3.PosY, null);
-		    g.drawImage(player4.pawnImage, player4.PosX, player4.PosY, null);
-		    g.drawImage(player5.pawnImage, player5.PosX, player5.PosY, null);
-		    g.drawImage(player6.pawnImage, player6.PosX, player6.PosY, null);
-	    }
+
+	    Graphics2D g2d = (Graphics2D)g;
+	    Ellipse2D.Double circle = new Ellipse2D.Double(players.get(0).PosX, players.get(0).PosY, 15, 15);
+	    g2d.setPaint(Color.green);
+	    g2d.fill(circle);
 	    
 	    if(dice.PaintDice)
 	    {
@@ -103,5 +104,12 @@ public class GameView extends View
 		
 		add(diceButton);
 		add(testWindowButton);
+	}
+
+	public void updatePlayer(int x, int y, int player)
+	{	
+		players.get(player).setXY(x, y);
+
+		repaint();
 	}
 }

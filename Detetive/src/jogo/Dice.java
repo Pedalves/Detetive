@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
+//import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
 public class Dice 
 {
