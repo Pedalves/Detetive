@@ -119,6 +119,11 @@ public class Game extends Observable
 							_availableCells = null;
 							xy = temp;
 							_players.get(_currentPlayer).setCell(cell);
+							
+							if(_currentPlayer == _players.size() - 1)
+								_currentPlayer = 0;
+							else
+								_currentPlayer++;
 							break;
 						}
 					}
