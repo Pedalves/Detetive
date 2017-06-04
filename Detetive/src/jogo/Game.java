@@ -1,5 +1,6 @@
 package jogo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,11 +13,16 @@ public class Game extends Observable
 	private int _currentPlayer;
 	
 	private Board _board;
+	private HashMap<Integer, Cell> _gameCells; 
 	
 	private Game(Observer observer)
 	{
 		_players = new HashMap<Integer, Player>();
 		_currentPlayer = 0;
+		
+		_board = new Board();
+		
+		setupBoard();
 		
 		addObserver(observer);
 	}
@@ -45,6 +51,11 @@ public class Game extends Observable
 	}
 	
 	public void newClickPosition(int x, int y)
+	{
+		
+	}
+	
+	private void setupBoard()
 	{
 		
 	}
