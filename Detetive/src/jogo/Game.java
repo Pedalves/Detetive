@@ -100,7 +100,7 @@ public class Game extends Observable
 	
 	public int[] newClickPosition(int x, int y)
 	{
-		int xy[] = {-1, -1};
+		int xyPlayer[] = {-1, -1, -1};
 		
 		for(int pos : _gameCells.keySet())
 		{
@@ -108,7 +108,7 @@ public class Game extends Observable
 			
 			if(cell.isInside(x, y))
 			{
-				int temp[] = {cell.getX(), cell.getY()};
+				int temp[] = {cell.getX(), cell.getY(), _currentPlayer};
 				
 				if(_availableCells != null)
 				{
@@ -117,7 +117,7 @@ public class Game extends Observable
 						if(availableCell[0] == temp[0] && availableCell[1] == temp[1])
 						{
 							_availableCells = null;
-							xy = temp;
+							xyPlayer = temp;
 							_players.get(_currentPlayer).setCell(cell);
 							
 							if(_currentPlayer == _players.size() - 1)
@@ -131,7 +131,7 @@ public class Game extends Observable
 			}
 		}
 		
-		return xy;
+		return xyPlayer;
 	}
 	
 	public void setDiceValue(int val)

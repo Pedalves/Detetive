@@ -53,7 +53,7 @@ public class Facade implements MouseListener, Observer
 		
 		if(newPosition[0] != -1)
 		{
-			_view.updatePlayer(newPosition[0], newPosition[1], 0);
+			_view.updatePlayer(newPosition[0], newPosition[1], newPosition[2]);
 		}
 	}
 
