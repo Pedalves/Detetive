@@ -4,6 +4,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -12,6 +13,8 @@ import javax.swing.JCheckBox;
 public class NewGameView extends View implements ItemListener
 {	
 	private JButton startButton;
+	
+	private ArrayList<String> _selectedPlayers;
 	
 	JCheckBox greenButton;
 	JCheckBox mustardButton;
@@ -23,18 +26,20 @@ public class NewGameView extends View implements ItemListener
 	private int numPlayers = 0;
 
 	public NewGameView()
-	{
+	{	
 		super();
+		
+		_selectedPlayers = new ArrayList<>();
 	}
 
 	public void setupUI()
-	{
-		greenButton = new JCheckBox("greenButton");
-		mustardButton = new JCheckBox("mustardButton");
-		peacockButton = new JCheckBox("peacockButton");
-		plumButton = new JCheckBox("plumButton");
-		scarletButton = new JCheckBox("scarletButton");
-		whiteButton = new JCheckBox("whiteButton");
+	{	
+		greenButton = new JCheckBox("green");
+		mustardButton = new JCheckBox("mustard");
+		peacockButton = new JCheckBox("peacock");
+		plumButton = new JCheckBox("plum");
+		scarletButton = new JCheckBox("scarlet");
+		whiteButton = new JCheckBox("white");
 		
 		greenButton.addItemListener(this);
 		mustardButton.addItemListener(this);
@@ -45,7 +50,7 @@ public class NewGameView extends View implements ItemListener
 		
 		startButton = new JButton("Começar o jogo");
 		startButton.addActionListener(e -> {
-			observable.changePanel(new GameView());
+			observable.changePanel(new GameView(_selectedPlayers));
 		});
 		startButton.setEnabled(false);
 		
@@ -72,6 +77,8 @@ public class NewGameView extends View implements ItemListener
            if(tmp.isSelected())
            {
         	   numPlayers++;
+        	   
+        	   _selectedPlayers.add(tmp.getText());
         	   if(numPlayers >= 3)
         	   {
         		   startButton.setEnabled(true);
@@ -80,6 +87,8 @@ public class NewGameView extends View implements ItemListener
            else
            {
         	   numPlayers--;
+        	   
+        	   _selectedPlayers.remove(tmp.getText());
         	   if(numPlayers < 3)
         	   {
         		   startButton.setEnabled(false);

@@ -10,6 +10,8 @@ public class RoomCell extends Cell
 	{
 		super(upperLeft, lowerRight);
 		
+		_posPlayers =  new HashMap<Integer, Integer[]>(); 
+		
 		for(int i = 0; i < 6; i++)
 		{
 			Integer[] pos = new Integer[2];

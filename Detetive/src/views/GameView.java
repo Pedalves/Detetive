@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -23,19 +24,56 @@ public class GameView extends View
 	private BufferedImage bgImage;
 	private String gameFile;
 
-	private boolean paintDice = false;
 	private Dice dice;
-	private BufferedImage diceImage;
 
 	private Facade _facade;
 
 	private HashMap<Integer, Player> players;
+	private HashMap<Integer, Color> _playersColors;
 
-	public GameView() {
+	public GameView(ArrayList<String> gamePlayers) {
 		super();
 		
 		players = new HashMap<Integer, Player>();
-		players.put(0, new Player(405, 50));
+		_playersColors = new HashMap<Integer, Color>();
+		
+		int i = 0;
+		for(String gamePlayer:gamePlayers)
+		{
+			Player temp = null;
+			
+			switch(gamePlayer)
+			{
+			case "green":
+				temp = new Player(400, 50);
+				_playersColors.put(i, Color.green);
+				break;
+			case "mustard":
+				temp = new Player(50, 475);
+				_playersColors.put(i, Color.yellow);
+				break;
+			case "peacock":
+				temp = new Player(625, 200);
+				_playersColors.put(i, Color.blue);
+				break;
+			case "plum":
+				temp = new Player(625, 525);
+				_playersColors.put(i, Color.magenta);
+				break;
+			case "scarlet":
+				temp = new Player(225, 650);
+				_playersColors.put(i, Color.red);
+				break;
+			case "white":
+				temp = new Player(275, 50);
+				_playersColors.put(i, Color.white);
+				break;
+			}
+			
+			players.put(i, temp);
+			i++;
+		}
+		
 
 		_facade = new Facade(this, players);
 		
@@ -51,7 +89,7 @@ public class GameView extends View
 	}
 
 	public GameView(String gameFile) {
-		this();
+		//this();
 
 		this.gameFile = gameFile;
 	}
@@ -60,16 +98,17 @@ public class GameView extends View
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(bgImage, 0, 0, null);
-
-		Graphics2D g2d = (Graphics2D) g;
-		Ellipse2D.Double circle = new Ellipse2D.Double(players.get(0).PosX, players.get(0).PosY, 23, 23);
-		g2d.setPaint(Color.green);
-		g2d.fill(circle);
-
+		
+		for(int player : players.keySet())
+		{
+			Graphics2D g2d = (Graphics2D) g;
+			Ellipse2D.Double circle = new Ellipse2D.Double(players.get(player).PosX, players.get(player).PosY, 23, 23);
+			g2d.setPaint(_playersColors.get(player));
+			g2d.fill(circle);
+		}
 		if (dice.PaintDice) {
 			g.drawImage(dice.DiceImage1, 700, 200, null);
 			g.drawImage(dice.DiceImage2, 800, 200, null);
-			paintDice = false;
 		}
 	}
 

@@ -34,7 +34,35 @@ public class Game extends Observable
 		
 		addObserver(observer);
 		
-		_players.get(0).setCell(_gameCells.get(3));
+		for(int player : _players.keySet())
+		{
+			switch(_players.get(player).PosX)
+			{
+			case 400:
+				_players.get(player).setCell(_gameCells.get(184));
+				break;
+			case 50:
+				_players.get(player).setCell(_gameCells.get(186));
+				break;
+			case 625:
+				if(_players.get(player).PosY == 200)
+				{
+					_players.get(player).setCell(_gameCells.get(185));
+					break;
+				}
+				else
+				{
+					_players.get(player).setCell(_gameCells.get(187));
+					break;
+				}
+			case 225:
+				_players.get(player).setCell(_gameCells.get(188));
+				break;
+			case 275:
+				_players.get(player).setCell(_gameCells.get(183));
+				break;
+			}
+		}
 	}
 	
 	static public Game getInstance(Observer observer, HashMap<Integer, Player> players)
@@ -103,7 +131,6 @@ public class Game extends Observable
 	
 	public void setDiceValue(int val)
 	{
-		System.out.println(val);
 		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
 		
 		Object infos[] = {(Object) 1, (Object)_availableCells.clone()}; 
@@ -149,7 +176,9 @@ public class Game extends Observable
 			int	roomUpperLeft[] = {50, 50}; 
 			int	roomLowerRight[] = {200, 200}; 
 			RoomCell room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Sala de musica
 			roomUpperLeft[0] = 250;
@@ -157,7 +186,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 450;
 			roomLowerRight[1] = 250; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Jardim de inverno
 			roomUpperLeft[0] = 500;
@@ -165,7 +196,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 650;
 			roomLowerRight[1] = 175; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Sala de jantar
 			roomUpperLeft[0] = 50;
@@ -173,7 +206,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 250;
 			roomLowerRight[1] = 450; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Salão de jogos
 			roomUpperLeft[0] = 500;
@@ -181,7 +216,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 650;
 			roomLowerRight[1] = 375; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Biblioteca
 			roomUpperLeft[0] = 475;
@@ -189,7 +226,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 650;
 			roomLowerRight[1] = 500; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Sala de estar
 			roomUpperLeft[0] = 50;
@@ -197,7 +236,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 225;
 			roomLowerRight[1] = 650; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Entrada
 			roomUpperLeft[0] = 275;
@@ -205,7 +246,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 425;
 			roomLowerRight[1] = 650; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			//Escritorio
 			roomUpperLeft[0] = 475;
@@ -213,7 +256,9 @@ public class Game extends Observable
 			roomLowerRight[0] = 650;
 			roomLowerRight[1] = 650; 
 			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_gameCells.put(i, room);
 			_board.addVertex(room);
+			i++;
 			
 			fr2 = new FileReader("casa ligacao.txt");
 			br2 = new BufferedReader(fr2);

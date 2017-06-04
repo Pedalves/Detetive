@@ -74,7 +74,7 @@ public class Facade implements MouseListener, Observer
 		// Update AvailableCells
 		case 1:
 			_availableCells = new ArrayList<>();
-			((ArrayList<int[]>)args[1]).forEach(_availableCells::add);;
+			((ArrayList<int[]>)args[1]).forEach(_availableCells::add);
 			break;
 		}
 		
