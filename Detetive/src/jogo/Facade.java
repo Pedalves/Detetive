@@ -2,6 +2,8 @@ package jogo;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,10 +14,12 @@ public class Facade implements MouseListener, Observer
 	private Game _game;
 	private GameView _view;
 	
-	public Facade(GameView view)
+	private ArrayList<int[]> _availableCells;
+	
+	public Facade(GameView view, HashMap<Integer, Player> players)
 	{
 		_view = view;
-		_game = Game.getInstance(this);
+		_game = Game.getInstance(this, players);
 	}
 
 	@Override
@@ -43,7 +47,18 @@ public class Facade implements MouseListener, Observer
 		
 		if(newPosition[0] != -1)
 		{
-			_view.updatePlayer(newPosition[0], newPosition[1], 0);
+			if(_availableCells != null)
+			{
+				for(int[] availableCell : _availableCells)
+				{
+					if(availableCell[0] == newPosition[0] && availableCell[1] == newPosition[1])
+					{
+						_view.updatePlayer(newPosition[0], newPosition[1], 0);
+						_availableCells = null;
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -53,11 +68,21 @@ public class Facade implements MouseListener, Observer
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-		int[] args = (int[])arg;
+		Object[] args = (Object[])arg;
 		
-		_view.updatePlayer(args[0], args[1], args[2]);
+		switch((int)args[0])
+		{
+		// Update AvailableCells
+		case 1:
+			_availableCells = new ArrayList<>();
+			((ArrayList<int[]>)args[1]).forEach(_availableCells::add);;
+			break;
+		}
+		
+		//_view.updatePlayer(args[0], args[1], args[2]);
 	}
 }

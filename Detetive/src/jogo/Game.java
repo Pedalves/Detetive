@@ -18,9 +18,9 @@ public class Game extends Observable
 	private Board _board;
 	private HashMap<Integer, Cell> _gameCells; 
 	
-	private Game(Observer observer)
+	private Game(Observer observer, HashMap<Integer, Player> players)
 	{
-		_players = new HashMap<Integer, Player>();
+		_players = players;
 		_currentPlayer = 0;
 		
 		_board = new Board();
@@ -30,13 +30,26 @@ public class Game extends Observable
 		setupBoard();
 		
 		addObserver(observer);
+		
+		_players.get(0).setCell(_gameCells.get(3));
+		setDiceValue(2);
 	}
 	
-	static public Game getInstance(Observer observer)
+	static public Game getInstance(Observer observer, HashMap<Integer, Player> players)
 	{
 		if(_game == null)
 		{
-			_game = new Game(observer);
+			_game = new Game(observer, players);
+		}
+		
+		return _game;
+	}
+	
+	static public Game getInstance()
+	{
+		if(_game == null)
+		{
+			_game = null;
 		}
 		
 		return _game;
@@ -73,10 +86,24 @@ public class Game extends Observable
 		return xy;
 	}
 	
+	public void setDiceValue(int val)
+	{
+		System.out.println(val);
+		ArrayList<int[]> availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
+		
+		Object infos[] = {(Object) 1, (Object)availableCells}; 
+		
+		setChanged();
+		notifyObservers((Object)infos);
+	}
+	
 	private void setupBoard()
 	{
 		BufferedReader br = null;
 		FileReader fr = null;
+		
+		BufferedReader br2 = null;
+		FileReader fr2 = null;
 
 		int i = 0;
 		
@@ -97,10 +124,28 @@ public class Game extends Observable
 				
 				Cell cell = new Cell(upperLeft, lowerRight);
 				
+				_board.addVertex(cell);
 				_gameCells.put(i, cell);
 				i++;
 			}
+			
+			fr2 = new FileReader("casa ligacao.txt");
+			br2 = new BufferedReader(fr2);
 
+			String arestasString;
+			i = 0;
+			
+			while ((arestasString = br2.readLine()) != null)
+			{	
+				String arestasList[] = arestasString.split(" ");
+					
+				for(String aresta : arestasList)
+				{
+					if(Integer.parseInt(aresta)!= -1)
+						_board.addEdge(_gameCells.get(i), _gameCells.get(Integer.parseInt(aresta)));
+				}
+				i++;
+			}
 		} 
 		catch (IOException e) 
 		{
@@ -115,6 +160,12 @@ public class Game extends Observable
 
 				if (fr != null)
 					fr.close();
+				
+				if (br2 != null)
+					br2.close();
+
+				if (fr2 != null)
+					fr2.close();
 
 			} 
 			catch (IOException ex) 
