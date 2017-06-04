@@ -74,7 +74,7 @@ public class GameView extends View
 	    
 
 	    Graphics2D g2d = (Graphics2D)g;
-	    Ellipse2D.Double circle = new Ellipse2D.Double(players.get(0).PosX, players.get(0).PosY, 15, 15);
+	    Ellipse2D.Double circle = new Ellipse2D.Double(players.get(0).PosX, players.get(0).PosY, 23, 23);
 	    g2d.setPaint(Color.green);
 	    g2d.fill(circle);
 	    

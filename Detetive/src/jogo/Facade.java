@@ -38,10 +38,13 @@ public class Facade implements MouseListener, Observer
 
 	@Override
 	public void mousePressed(MouseEvent e)
-	{
-		System.out.println(e.getX());
-		System.out.println(e.getY());
-		_view.updatePlayer(e.getX(), e.getY(), 0);
+	{		
+		int newPosition[] = _game.newClickPosition(e.getX(), e.getY());
+		
+		if(newPosition[0] != -1)
+		{
+			_view.updatePlayer(newPosition[0], newPosition[1], 0);
+		}
 	}
 
 	@Override
