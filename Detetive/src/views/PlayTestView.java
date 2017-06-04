@@ -3,20 +3,34 @@ package views;
 import java.awt.Component;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-public class PlayTestView extends View
-{
+import jogo.Facade;
 
-	@Override
-	public void setupUI() 
+@SuppressWarnings("serial")
+public class PlayTestView extends JFrame
+{
+	private Facade _facade;
+	
+	public PlayTestView(Component window, Facade facade)
+	{
+		super();
+		
+		setSize(200, 100);
+		setLocationRelativeTo(null);
+		
+		setVisible(true);
+		
+		_facade = facade;
+		
+		setupWindow();
+	}
+	
+	public void setupWindow() 
 	{
 		JTextField textField = new JTextField();
-		textField.setAlignmentX(Component.CENTER_ALIGNMENT);	
-		
-		JButton setDiceValueButton = new JButton("Setar valor do dado");
-		setDiceValueButton.setAlignmentX(Component.CENTER_ALIGNMENT);		
-		setDiceValueButton.addActionListener(e -> {
+		textField.addActionListener(e -> {
 			String text = textField.getText();
 			int num;
 			try
@@ -27,7 +41,12 @@ public class PlayTestView extends View
 			{
 		        num = 0;
 		    }
+			_facade.newDiceValue(num);
+			setVisible(false);
+			dispose();
 		});
+		
+		add(textField);
 	}
 
 }
