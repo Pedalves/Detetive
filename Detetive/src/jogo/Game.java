@@ -144,6 +144,77 @@ public class Game extends Observable
 				i++;
 			}
 			
+			//Montando quartos
+			//Cozinha
+			int	roomUpperLeft[] = {50, 50}; 
+			int	roomLowerRight[] = {200, 200}; 
+			RoomCell room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Sala de musica
+			roomUpperLeft[0] = 250;
+			roomUpperLeft[1] = 100;
+			roomLowerRight[0] = 450;
+			roomLowerRight[1] = 250; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Jardim de inverno
+			roomUpperLeft[0] = 500;
+			roomUpperLeft[1] = 75;
+			roomLowerRight[0] = 650;
+			roomLowerRight[1] = 175; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Sala de jantar
+			roomUpperLeft[0] = 50;
+			roomUpperLeft[1] = 300;
+			roomLowerRight[0] = 250;
+			roomLowerRight[1] = 450; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Salão de jogos
+			roomUpperLeft[0] = 500;
+			roomUpperLeft[1] = 250;
+			roomLowerRight[0] = 650;
+			roomLowerRight[1] = 375; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Biblioteca
+			roomUpperLeft[0] = 475;
+			roomUpperLeft[1] = 425;
+			roomLowerRight[0] = 650;
+			roomLowerRight[1] = 500; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Sala de estar
+			roomUpperLeft[0] = 50;
+			roomUpperLeft[1] = 525;
+			roomLowerRight[0] = 225;
+			roomLowerRight[1] = 650; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Entrada
+			roomUpperLeft[0] = 275;
+			roomUpperLeft[1] = 500;
+			roomLowerRight[0] = 425;
+			roomLowerRight[1] = 650; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
+			//Escritorio
+			roomUpperLeft[0] = 475;
+			roomUpperLeft[1] = 575;
+			roomLowerRight[0] = 650;
+			roomLowerRight[1] = 650; 
+			room = new RoomCell(roomUpperLeft, roomLowerRight);
+			_board.addVertex(room);
+			
 			fr2 = new FileReader("casa ligacao.txt");
 			br2 = new BufferedReader(fr2);
 
