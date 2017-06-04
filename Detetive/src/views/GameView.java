@@ -78,7 +78,7 @@ public class GameView extends View
 		JButton diceButton = new JButton("Rolar dado");
 		diceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		diceButton.addActionListener(e -> {
-			dice.RollDice();
+			_facade.newDiceValue(dice.RollDice());
 			repaint();
 		});
 

@@ -22,6 +22,11 @@ public class Facade implements MouseListener, Observer
 		_game = Game.getInstance(this, players);
 	}
 
+	public void newDiceValue(int val)
+	{
+		_game.setDiceValue(val);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -47,18 +52,7 @@ public class Facade implements MouseListener, Observer
 		
 		if(newPosition[0] != -1)
 		{
-			if(_availableCells != null)
-			{
-				for(int[] availableCell : _availableCells)
-				{
-					if(availableCell[0] == newPosition[0] && availableCell[1] == newPosition[1])
-					{
-						_view.updatePlayer(newPosition[0], newPosition[1], 0);
-						_availableCells = null;
-						break;
-					}
-				}
-			}
+			_view.updatePlayer(newPosition[0], newPosition[1], 0);
 		}
 	}
 

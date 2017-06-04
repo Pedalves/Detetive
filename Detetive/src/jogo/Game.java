@@ -18,6 +18,8 @@ public class Game extends Observable
 	private Board _board;
 	private HashMap<Integer, Cell> _gameCells; 
 	
+	private ArrayList<int[]> _availableCells;
+	
 	private Game(Observer observer, HashMap<Integer, Player> players)
 	{
 		_players = players;
@@ -26,13 +28,13 @@ public class Game extends Observable
 		_board = new Board();
 		
 		_gameCells = new HashMap<Integer, Cell>();
+		_availableCells = null;
 		
 		setupBoard();
 		
 		addObserver(observer);
 		
 		_players.get(0).setCell(_gameCells.get(3));
-		setDiceValue(2);
 	}
 	
 	static public Game getInstance(Observer observer, HashMap<Integer, Player> players)
@@ -79,7 +81,20 @@ public class Game extends Observable
 			if(cell.isInside(x, y))
 			{
 				int temp[] = {cell.getX(), cell.getY()};
-				xy = temp;
+				
+				if(_availableCells != null)
+				{
+					for(int[] availableCell : _availableCells)
+					{
+						if(availableCell[0] == temp[0] && availableCell[1] == temp[1])
+						{
+							_availableCells = null;
+							xy = temp;
+							_players.get(_currentPlayer).setCell(cell);
+							break;
+						}
+					}
+				}
 			}
 		}
 		
@@ -89,9 +104,9 @@ public class Game extends Observable
 	public void setDiceValue(int val)
 	{
 		System.out.println(val);
-		ArrayList<int[]> availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
+		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
 		
-		Object infos[] = {(Object) 1, (Object)availableCells}; 
+		Object infos[] = {(Object) 1, (Object)_availableCells.clone()}; 
 		
 		setChanged();
 		notifyObservers((Object)infos);
