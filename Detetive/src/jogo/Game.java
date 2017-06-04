@@ -39,27 +39,27 @@ public class Game extends Observable
 			switch(_players.get(player).PosX)
 			{
 			case 400:
-				_players.get(player).setCell(_gameCells.get(184));
+				_players.get(player).setCell(_gameCells.get(183));
 				break;
 			case 50:
-				_players.get(player).setCell(_gameCells.get(186));
+				_players.get(player).setCell(_gameCells.get(185));
 				break;
 			case 625:
 				if(_players.get(player).PosY == 200)
 				{
-					_players.get(player).setCell(_gameCells.get(185));
+					_players.get(player).setCell(_gameCells.get(184));
 					break;
 				}
 				else
 				{
-					_players.get(player).setCell(_gameCells.get(187));
+					_players.get(player).setCell(_gameCells.get(186));
 					break;
 				}
 			case 225:
-				_players.get(player).setCell(_gameCells.get(188));
+				_players.get(player).setCell(_gameCells.get(187));
 				break;
 			case 275:
-				_players.get(player).setCell(_gameCells.get(183));
+				_players.get(player).setCell(_gameCells.get(182));
 				break;
 			}
 		}
