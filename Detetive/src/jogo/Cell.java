@@ -2,7 +2,7 @@ package jogo;
 
 public class Cell
 {
-	public boolean Available = false;
+//	public boolean Available = false;
 	
 	private final int _posUpperLeft[];
 	private final int _posLowerRight[];

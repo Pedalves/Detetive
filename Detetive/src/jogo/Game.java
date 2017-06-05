@@ -113,7 +113,27 @@ public class Game extends Observable
 				{
 					temp = new int[] {((RoomCell)cell).GetPosX(_currentPlayer), ((RoomCell)cell).GetPosY(_currentPlayer), _currentPlayer};	
 					
-					
+					if(_availableCells != null)
+					{
+						for(int[] availableCell : _availableCells)
+						{
+							if(availableCell[0] == cell.getX() && availableCell[1] == cell.getY())
+							{
+								_availableCells = null;
+								xyPlayer = temp;
+								
+								_players.get(_currentPlayer).getCell().setOcuppied(false);
+								
+								_players.get(_currentPlayer).setCell(cell);
+								
+								if(_currentPlayer == _players.size() - 1)
+									_currentPlayer = 0;
+								else
+									_currentPlayer++;
+								break;
+							}
+						}
+					}
 				}
 				else
 				{
