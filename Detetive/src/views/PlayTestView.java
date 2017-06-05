@@ -1,9 +1,12 @@
 package views;
 
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jogo.Facade;
@@ -29,6 +32,11 @@ public class PlayTestView extends JFrame
 	
 	public void setupWindow() 
 	{
+		JPanel panel = new JPanel();
+		
+		JLabel label = new JLabel("Não utilizar valores acima de 12");
+		panel.add(label);
+		
 		JTextField textField = new JTextField();
 		textField.addActionListener(e -> {
 			String text = textField.getText();
@@ -45,8 +53,11 @@ public class PlayTestView extends JFrame
 			setVisible(false);
 			dispose();
 		});
+		textField.setPreferredSize(new Dimension(50,30));
 		
-		add(textField);
+		panel.add(textField);
+		
+		add(panel);
 	}
 
 }
