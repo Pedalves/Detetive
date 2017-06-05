@@ -21,4 +21,15 @@ public class RoomCell extends Cell
 		}
 	}
 	
+	public int GetPosX(int numPlayer)
+	{
+		System.out.println("ENTROU NO POSX ROOM");
+		return _posPlayers.get(numPlayer)[0];
+	}
+	
+	public int GetPosY(int numPlayer)
+	{
+		System.out.println("ENTROU NO POSY ROOM");
+		return _posPlayers.get(numPlayer)[1];
+	}
 }
