@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 
+import jogo.Cell;
+
 public class Grafo<E>
 {
 	private HashMap<E, LinkedList<E>> graph;
 	
-	public Grafo()
+	private final Class<E> _typeParameterClass;
+	
+	public Grafo(Class<E> typeParameterClass)
 	{
+		_typeParameterClass = typeParameterClass;
 		graph = new HashMap<E, LinkedList<E>>();
 	}
 	
@@ -35,7 +40,17 @@ public class Grafo<E>
 								
 				for(E child : getChildren(node))
 				{
-					tempQueue.add(child);
+					if(_typeParameterClass == Cell.class)
+					{
+						if(!((Cell)child).getOcuppied())
+						{
+							tempQueue.add(child);
+						}
+					}
+					else
+					{
+						tempQueue.add(child);
+					}
 				}
 			}
 			
@@ -53,7 +68,7 @@ public class Grafo<E>
 	}
 	
 	public void addEdge(E node1, E node2)
-	{
+	{	
 		graph.get(node1).add(node2);
 		graph.get(node2).add(node1);
 	}
@@ -65,7 +80,7 @@ public class Grafo<E>
 	
 	public static void main(String arg[])
 	{		
-		Grafo<Integer> g = new Grafo<Integer>();  
+		Grafo<Integer> g = new Grafo<Integer>(Integer.class);  
 		
 		g.addVertex(1);
 		g.addVertex(2);

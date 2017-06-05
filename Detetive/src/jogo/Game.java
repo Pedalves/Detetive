@@ -127,6 +127,10 @@ public class Game extends Observable
 							{
 								_availableCells = null;
 								xyPlayer = temp;
+								
+								_players.get(_currentPlayer).getCell().setOcuppied(false);
+								cell.setOcuppied(true);
+								
 								_players.get(_currentPlayer).setCell(cell);
 								
 								if(_currentPlayer == _players.size() - 1)

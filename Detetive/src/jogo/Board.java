@@ -8,7 +8,7 @@ public class Board extends Grafo<Cell>
 {
 	public Board()
 	{
-		super();
+		super(Cell.class);
 	}
 	
 	public ArrayList<int[]>getAvailableCells(int level, Cell rootPosition)
