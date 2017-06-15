@@ -30,8 +30,8 @@ public class Facade implements MouseListener, Observer
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(e.getX());
-		System.out.println(e.getY());
+//		System.out.println(e.getX());
+//		System.out.println(e.getY());
 	}
 
 	@Override
