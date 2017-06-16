@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,7 +16,7 @@ public class Facade implements MouseListener, Observer
 	private GameView _view;
 	
 	private ArrayList<int[]> _availableCells;
-	
+		
 	public Facade(GameView view, HashMap<Integer, Player> players)
 	{
 		_view = view;
@@ -79,5 +80,10 @@ public class Facade implements MouseListener, Observer
 		}
 		
 		//_view.updatePlayer(args[0], args[1], args[2]);
+	}
+	
+	public List<Card> getCurrentPlayerCards()
+	{
+		return _game.getCurrentPlayerCards();
 	}
 }

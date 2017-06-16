@@ -16,7 +16,7 @@ public class PlayTestView extends JFrame
 {
 	private Facade _facade;
 	
-	public PlayTestView(Component window, Facade facade)
+	public PlayTestView(Facade facade)
 	{
 		super();
 		

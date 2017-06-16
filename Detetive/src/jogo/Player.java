@@ -42,4 +42,9 @@ public class Player
 	{
 		_cards = cards;
 	}
+	
+	public List<Card> getCards()
+	{
+		return _cards;
+	}
 }

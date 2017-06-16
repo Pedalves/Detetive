@@ -350,4 +350,9 @@ public class Game extends Observable
 			i++;
 		}
 	}
+
+	public List<Card> getCurrentPlayerCards() 
+	{
+		return _players.get(getCurrentPlayer()).getCards();
+	}
 }

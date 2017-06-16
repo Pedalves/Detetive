@@ -124,11 +124,25 @@ public class GameView extends View
 		JButton testWindowButton = new JButton("Escolher valor do dado");
 		testWindowButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		testWindowButton.addActionListener(e -> {
-			new PlayTestView(this, _facade);
+			new PlayTestView(_facade);
+		});
+		
+		JButton showCardsButton = new JButton("Ver cartas");
+		showCardsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		showCardsButton.addActionListener(e -> {
+			new PlayerCardsView(_facade);
+		});
+		
+		JButton showNotesButton = new JButton("Ver bloco de notas");
+		showNotesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		showNotesButton.addActionListener(e -> {
+			new PlayerNotesView(_facade);
 		});
 
 		add(diceButton);
 		add(testWindowButton);
+		add(showCardsButton);
+		add(showNotesButton);
 	}
 
 	public void updatePlayer(int x, int y, int player) {
