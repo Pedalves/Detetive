@@ -1,10 +1,12 @@
 package jogo;
 
-import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Player 
 {
 	private Cell _cell;
+	
+	private List<Card> _cards;
 	
 	public int PosX;
 	public int PosY;
@@ -34,5 +36,10 @@ public class Player
 	public Cell getCell()
 	{
 		return _cell;
+	}
+	
+	public void setCards(List<Card> cards)
+	{
+		_cards = cards;
 	}
 }

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,6 +21,9 @@ public class Game extends Observable
 	
 	private ArrayList<int[]> _availableCells;
 	
+	private Deck _deck;
+	private List<Card> _keyCards;
+	
 	private Game(Observer observer, HashMap<Integer, Player> players)
 	{
 		_players = players;
@@ -31,6 +35,7 @@ public class Game extends Observable
 		_availableCells = null;
 		
 		setupBoard();
+		setupCards();
 		
 		addObserver(observer);
 		
@@ -326,6 +331,23 @@ public class Game extends Observable
 			{
 				ex.printStackTrace();
 			}
+		}
+	}
+	
+	private void setupCards()
+	{
+		_deck = Deck.getInstance();
+		
+		_deck.shuffleDeck();
+		_keyCards = _deck.getKeyCards();
+		
+		List<ArrayList<Card>> playersCards = _deck.getPlayersCards(_players.size());
+		
+		int i = 0;
+		for(ArrayList<Card> cards : playersCards)
+		{
+			_players.get(i).setCards(cards);
+			i++;
 		}
 	}
 }
