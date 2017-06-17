@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import jogo.Dice;
 import jogo.Facade;
@@ -31,6 +32,8 @@ public class GameView extends View
 	private HashMap<Integer, Player> players;
 	private HashMap<Integer, Color> _playersColors;
 
+	private JLabel _currentPlayerName;
+	
 	public GameView(ArrayList<String> gamePlayers) {
 		super();
 		
@@ -45,27 +48,27 @@ public class GameView extends View
 			switch(gamePlayer)
 			{
 			case "green":
-				temp = new Player(400, 50);
+				temp = new Player(400, 50, "Green");
 				_playersColors.put(i, Color.green);
 				break;
 			case "mustard":
-				temp = new Player(50, 475);
+				temp = new Player(50, 475, "Mustard");
 				_playersColors.put(i, Color.yellow);
 				break;
 			case "peacock":
-				temp = new Player(625, 200);
+				temp = new Player(625, 200, "Peacock");
 				_playersColors.put(i, Color.blue);
 				break;
 			case "plum":
-				temp = new Player(625, 525);
+				temp = new Player(625, 525, "Plum");
 				_playersColors.put(i, Color.magenta);
 				break;
 			case "scarlet":
-				temp = new Player(225, 650);
+				temp = new Player(225, 650, "Scarlet");
 				_playersColors.put(i, Color.red);
 				break;
 			case "white":
-				temp = new Player(275, 50);
+				temp = new Player(275, 50, "White");
 				_playersColors.put(i, Color.white);
 				break;
 			}
@@ -78,6 +81,9 @@ public class GameView extends View
 		_facade = new Facade(this, players);
 		
 		dice = new Dice();
+		
+		_currentPlayerName = new JLabel("Current Player: " + _facade.getCurrentPlayerName());
+		add(_currentPlayerName);
 
 		addMouseListener(_facade);
 
@@ -110,6 +116,8 @@ public class GameView extends View
 			g.drawImage(dice.DiceImage1, 700, 200, null);
 			g.drawImage(dice.DiceImage2, 800, 200, null);
 		}
+		
+		_currentPlayerName.setText("Current Player: " + _facade.getCurrentPlayerName());
 	}
 
 	@Override

@@ -355,4 +355,14 @@ public class Game extends Observable
 	{
 		return _players.get(getCurrentPlayer()).getCards();
 	}
+	
+	public List<String> getCurrentPlayerNotes() 
+	{
+		return _players.get(getCurrentPlayer()).getNotes();
+	}
+	
+	public String getCurrentPlayerName()
+	{
+		return _players.get(getCurrentPlayer()).getName();
+	}
 }

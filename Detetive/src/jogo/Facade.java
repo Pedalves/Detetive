@@ -86,4 +86,14 @@ public class Facade implements MouseListener, Observer
 	{
 		return _game.getCurrentPlayerCards();
 	}
+	
+	public List<String> getCurrentPlayerNotes()
+	{
+		return _game.getCurrentPlayerNotes();
+	}
+	
+	public String getCurrentPlayerName()
+	{
+		return _game.getCurrentPlayerName();
+	}
 }
