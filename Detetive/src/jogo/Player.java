@@ -13,6 +13,9 @@ public class Player
 	
 	public int PosX;
 	public int PosY;
+	
+	private boolean _canWalk;
+	private boolean _canGuess;
 		
 	public Player(int x, int y, String name)
 	{
@@ -21,6 +24,9 @@ public class Player
 		_name = name;
 		
 		_notes = new ArrayList<String>();
+		
+		_canGuess = false;
+		_canWalk = true;
 	}
 	
 	public void setXY(int x, int y)
@@ -59,6 +65,11 @@ public class Player
 		return _cards;
 	}
 	
+	public void addNote(String card)
+	{
+		_notes.add(card);
+	}
+	
 	public List<String> getNotes()
 	{
 		return _notes;
@@ -67,5 +78,25 @@ public class Player
 	public String getName()
 	{
 		return _name;
+	}
+	
+	public boolean getCanWalk()
+	{
+		return _canWalk;
+	}
+	
+	public void setCanWalk(boolean canWalk)
+	{
+		_canWalk = canWalk;
+	}
+	
+	public boolean getCanGuess()
+	{
+		return _canGuess;
+	}
+	
+	public void setCanGuess(boolean canGuess)
+	{
+		_canGuess = canGuess;
 	}
 }

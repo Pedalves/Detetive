@@ -29,7 +29,7 @@ public class Deck
 	private void createDeck()
 	{
 		String[] weapons = {"Cano","Castical","ChaveInglesa","Corda","Faca","Revolver"};
-		String[] rooms = {"Biblioteca","Cozinha","Entrada","Escritorio","JardimInverno","SalaDeEstar","SalaDeJantar","SalaDeMusica","SalaoDeJogos"};
+		String[] rooms = {"Biblioteca","Cozinha","Entrada","Escritorio","Jardim De Inverno","Sala De Estar","Sala De Jantar","Sala De Musica","Salao De Jogos"};
 		String[] suspects = {"Green","Mustard","Peacock","Plum","Scarlet","White"};
 		
 		_cards = new ArrayList<Card>();

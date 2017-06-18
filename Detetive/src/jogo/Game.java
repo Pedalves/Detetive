@@ -1,5 +1,6 @@
 package jogo;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -103,9 +104,28 @@ public class Game extends Observable
 		return _currentPlayer;
 	}
 	
-	public int[] newClickPosition(int x, int y)
+	public void newTurn()
+	{
+		if(_currentPlayer == _players.size() - 1)
+			_currentPlayer = 0;
+		else
+			_currentPlayer++;
+		
+		if(_players.get(getCurrentPlayer()).getCell() instanceof RoomCell)
+		{
+			_players.get(_currentPlayer).setCanGuess(true); 
+		}
+		_players.get(_currentPlayer).setCanWalk(true);
+	}
+	
+	public int[] newClickPosition(int x, int y, int player)
 	{
 		int xyPlayer[] = {-1, -1, -1};
+		
+		if(!_players.get(player).getCanWalk())
+		{
+			return xyPlayer;
+		}
 		
 		for(int pos : _gameCells.keySet())
 		{
@@ -116,7 +136,7 @@ public class Game extends Observable
 				int temp[];
 				if(cell instanceof RoomCell)
 				{
-					temp = new int[] {((RoomCell)cell).GetPosX(_currentPlayer), ((RoomCell)cell).GetPosY(_currentPlayer), _currentPlayer};	
+					temp = new int[] {((RoomCell)cell).GetPosX(player), ((RoomCell)cell).GetPosY(player), player};	
 					
 					if(_availableCells != null)
 					{
@@ -127,14 +147,12 @@ public class Game extends Observable
 								_availableCells = null;
 								xyPlayer = temp;
 								
-								_players.get(_currentPlayer).getCell().setOcuppied(false);
+								_players.get(player).getCell().setOcuppied(false);
 								
-								_players.get(_currentPlayer).setCell(cell);
+								_players.get(player).setCell(cell);
+								_players.get(player).setCanWalk(false);
+								_players.get(player).setCanGuess(true);
 								
-								if(_currentPlayer == _players.size() - 1)
-									_currentPlayer = 0;
-								else
-									_currentPlayer++;
 								break;
 							}
 						}
@@ -142,7 +160,7 @@ public class Game extends Observable
 				}
 				else
 				{
-					temp = new int[] {cell.getX(), cell.getY(), _currentPlayer};
+					temp = new int[] {cell.getX(), cell.getY(), player};
 					
 					if(_availableCells != null)
 					{
@@ -153,15 +171,13 @@ public class Game extends Observable
 								_availableCells = null;
 								xyPlayer = temp;
 								
-								_players.get(_currentPlayer).getCell().setOcuppied(false);
+								_players.get(player).getCell().setOcuppied(false);
 								cell.setOcuppied(true);
 								
-								_players.get(_currentPlayer).setCell(cell);
+								_players.get(player).setCell(cell);
+								_players.get(player).setCanGuess(false);
+								_players.get(player).setCanWalk(false);
 								
-								if(_currentPlayer == _players.size() - 1)
-									_currentPlayer = 0;
-								else
-									_currentPlayer++;
 								break;
 							}
 						}
@@ -219,7 +235,7 @@ public class Game extends Observable
 			//Cozinha
 			int	roomUpperLeft[] = {50, 50}; 
 			int	roomLowerRight[] = {200, 200}; 
-			RoomCell room = new RoomCell(roomUpperLeft, roomLowerRight);
+			RoomCell room = new RoomCell(roomUpperLeft, roomLowerRight, "Cozinha");
 			_gameCells.put(i, room);
 			_board.addVertex(room);
 			i++;
@@ -227,7 +243,7 @@ public class Game extends Observable
 			//Sala de musica
 			int	roomUpperLeft2[] = {250, 100}; 
 			int	roomLowerRight2[] = {450, 250};
-			RoomCell room2 = new RoomCell(roomUpperLeft2, roomLowerRight2);
+			RoomCell room2 = new RoomCell(roomUpperLeft2, roomLowerRight2, "Sala De Musica");
 			_gameCells.put(i, room2);
 			_board.addVertex(room2);
 			i++;
@@ -235,7 +251,7 @@ public class Game extends Observable
 			//Jardim de inverno
 			int	roomUpperLeft3[] = {500, 75}; 
 			int	roomLowerRight3[] = {650, 175};
-			RoomCell room3 = new RoomCell(roomUpperLeft3, roomLowerRight3);
+			RoomCell room3 = new RoomCell(roomUpperLeft3, roomLowerRight3, "Jardim De Inverno");
 			_gameCells.put(i, room3);
 			_board.addVertex(room3);
 			i++;
@@ -243,7 +259,7 @@ public class Game extends Observable
 			//Sala de jantar
 			int	roomUpperLeft4[] = {50, 300}; 
 			int	roomLowerRight4[] = {250, 450};
-			RoomCell room4 = new RoomCell(roomUpperLeft4, roomLowerRight4);
+			RoomCell room4 = new RoomCell(roomUpperLeft4, roomLowerRight4, "Sala De Jantar");
 			_gameCells.put(i, room4);
 			_board.addVertex(room4);
 			i++;
@@ -251,7 +267,7 @@ public class Game extends Observable
 			//Salão de jogos
 			int	roomUpperLeft5[] = {500, 250}; 
 			int	roomLowerRight5[] = {650, 375};
-			RoomCell room5 = new RoomCell(roomUpperLeft5, roomLowerRight5);
+			RoomCell room5 = new RoomCell(roomUpperLeft5, roomLowerRight5, "Salão De Jogos");
 			_gameCells.put(i, room5);
 			_board.addVertex(room5);
 			i++;
@@ -259,7 +275,7 @@ public class Game extends Observable
 			//Biblioteca
 			int	roomUpperLeft6[] = {475, 425}; 
 			int	roomLowerRight6[] = {650, 500}; 
-			RoomCell room6 = new RoomCell(roomUpperLeft6, roomLowerRight6);
+			RoomCell room6 = new RoomCell(roomUpperLeft6, roomLowerRight6, "Biblioteca");
 			_gameCells.put(i, room6);
 			_board.addVertex(room6);
 			i++;
@@ -267,7 +283,7 @@ public class Game extends Observable
 			//Sala de estar
 			int	roomUpperLeft7[] = {50, 525}; 
 			int	roomLowerRight7[] = {225, 650};
-			RoomCell room7 = new RoomCell(roomUpperLeft7, roomLowerRight7);
+			RoomCell room7 = new RoomCell(roomUpperLeft7, roomLowerRight7, "Sala De Estar");
 			_gameCells.put(i, room7);
 			_board.addVertex(room7);
 			i++;
@@ -275,7 +291,7 @@ public class Game extends Observable
 			//Entrada
 			int	roomUpperLeft8[] = {275, 500}; 
 			int	roomLowerRight8[] = {425, 650};
-			RoomCell room8 = new RoomCell(roomUpperLeft8, roomLowerRight8);
+			RoomCell room8 = new RoomCell(roomUpperLeft8, roomLowerRight8, "Entrada");
 			_gameCells.put(i, room8);
 			_board.addVertex(room8);
 			i++;
@@ -283,7 +299,7 @@ public class Game extends Observable
 			//Escritorio
 			int	roomUpperLeft9[] = {475, 575}; 
 			int	roomLowerRight9[] = {650, 650};
-			RoomCell room9 = new RoomCell(roomUpperLeft9, roomLowerRight9);
+			RoomCell room9 = new RoomCell(roomUpperLeft9, roomLowerRight9, "Escritorio");
 			_gameCells.put(i, room9);
 			_board.addVertex(room9);
 			i++;
@@ -364,5 +380,69 @@ public class Game extends Observable
 	public String getCurrentPlayerName()
 	{
 		return _players.get(getCurrentPlayer()).getName();
+	}
+	
+	public String getCurrentPlayerRoom()
+	{
+		if(_players.get(getCurrentPlayer()).getCell() instanceof RoomCell)
+		{
+			return ((RoomCell)_players.get(getCurrentPlayer()).getCell()).getName(); 
+		}
+		return null;
+	}
+	
+	public String guessResult(String[] guess)
+	{
+		if(!_players.get(getCurrentPlayer()).getCanGuess())
+		{
+			return "Apenas 1 palpite por turno é permitido";
+		}
+		
+		for(int player: _players.keySet())
+		{
+			if(guess[0] == _players.get(player).getName())
+			{
+				Facade facade = Facade.getInstance();
+				
+				_players.get(player).setCanWalk(true);
+				int[] temp = {_players.get(getCurrentPlayer()).getCell().getX(), _players.get(getCurrentPlayer()).getCell().getY()};
+				ArrayList<int[]> cellsPositions = new ArrayList<int[]>();
+				cellsPositions.add(temp);
+				_availableCells = cellsPositions;
+				facade.updatePlayerPosition(newClickPosition(_players.get(getCurrentPlayer()).getCell().getX()+1, _players.get(getCurrentPlayer()).getCell().getY()+1, player));
+				break;
+			}
+		}
+		
+		_players.get(getCurrentPlayer()).setCanGuess(false);
+		int i = _currentPlayer == _players.size() - 1 ? 0 : _currentPlayer + 1;
+		
+		while(i != _currentPlayer)
+		{
+			List<Card> cards = _players.get(i).getCards();
+			
+			for(Card c : cards)
+			{
+				if(guess[0] == c.GetName())
+				{
+					_players.get(_currentPlayer).addNote(c.GetName());
+					return "Jogador " + _players.get(i).getName() + " possui a carta " + c.GetName();
+				}
+				else if(guess[1] == c.GetName())
+				{
+					_players.get(_currentPlayer).addNote(c.GetName());
+					return "Jogador " + _players.get(i).getName() + " possui a carta " + c.GetName();
+				}
+				else if(guess[2] == c.GetName())
+				{
+					_players.get(_currentPlayer).addNote(c.GetName());
+					return "Jogador " + _players.get(i).getName() + " possui a carta " + c.GetName();
+				}
+			}
+			
+			i = i == _players.size() - 1 ? 0 : i + 1;
+		}
+		
+		return "Nenhum jogador possui as cartas do palpite";
 	}
 }

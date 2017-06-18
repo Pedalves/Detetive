@@ -12,17 +12,34 @@ import views.GameView;
 
 public class Facade implements MouseListener, Observer
 {
+	static private Facade _facade;
+	
 	private Game _game;
 	private GameView _view;
 	
 	private ArrayList<int[]> _availableCells;
 		
-	public Facade(GameView view, HashMap<Integer, Player> players)
+	private Facade(GameView view, HashMap<Integer, Player> players)
 	{
 		_view = view;
 		_game = Game.getInstance(this, players);
 	}
 
+	static public Facade getInstance()
+	{
+		return _facade;
+	}
+	
+	static public Facade getInstance(GameView view, HashMap<Integer, Player> players)
+	{
+		if(_facade == null)
+		{
+			_facade = new Facade(view, players);
+		}
+		
+		return _facade;
+	}
+	
 	public void newDiceValue(int val)
 	{
 		_game.setDiceValue(val);
@@ -50,12 +67,9 @@ public class Facade implements MouseListener, Observer
 	@Override
 	public void mousePressed(MouseEvent e)
 	{		
-		int newPosition[] = _game.newClickPosition(e.getX(), e.getY());
+		int newPosition[] = _game.newClickPosition(e.getX(), e.getY(), _game.getCurrentPlayer());
 		
-		if(newPosition[0] != -1)
-		{
-			_view.updatePlayer(newPosition[0], newPosition[1], newPosition[2]);
-		}
+		updatePlayerPosition(newPosition);
 	}
 
 	@Override
@@ -95,5 +109,28 @@ public class Facade implements MouseListener, Observer
 	public String getCurrentPlayerName()
 	{
 		return _game.getCurrentPlayerName();
+	}
+	
+	public String getCurrentPlayerRoom()
+	{
+		return _game.getCurrentPlayerRoom();
+	}
+	
+	public String newGuess(String[] guess)
+	{
+		return _game.guessResult(guess);
+	}
+	
+	public void endTurn()
+	{
+		_game.newTurn();
+	}
+	
+	public void updatePlayerPosition(int[] newPosition)
+	{
+		if(newPosition[0] != -1)
+		{
+			_view.updatePlayer(newPosition[0], newPosition[1], newPosition[2]);
+		}
 	}
 }

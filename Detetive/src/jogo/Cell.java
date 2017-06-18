@@ -8,14 +8,12 @@ public class Cell
 	private final int _posLowerRight[];
 	
 	private boolean _ocuppied;
-//	private final boolean _isRoom;
 	
 	public Cell(int[] upperLeft, int[] lowerRight)
 	{	
 		_posUpperLeft = upperLeft;
 		_posLowerRight = lowerRight;
 		
-//		_isRoom = false;
 		_ocuppied = false;		
 	}
 	
@@ -23,9 +21,7 @@ public class Cell
 	{
 		_posUpperLeft = lowerLeft;
 		_posLowerRight = upperRight;
-		
-//		_isRoom = isRoom;
-		
+				
 		_ocuppied = false;
 	}
 	
@@ -48,11 +44,6 @@ public class Cell
 	{
 		return _posUpperLeft[1];
 	}
-	
-//	public boolean isRoom()
-//	{
-//		return _isRoom;
-//	}
 	
 	public boolean isInside(int x, int y)
 	{

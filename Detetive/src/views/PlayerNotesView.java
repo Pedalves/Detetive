@@ -36,7 +36,7 @@ public class PlayerNotesView extends JFrame
 		List<String> notes = _facade.getCurrentPlayerNotes();
 		
 		String[] weapons = {"Cano","Castical","ChaveInglesa","Corda","Faca","Revolver"};
-		String[] rooms = {"Biblioteca","Cozinha","Entrada","Escritorio","JardimInverno","SalaDeEstar","SalaDeJantar","SalaDeMusica","SalaoDeJogos"};
+		String[] rooms = {"Biblioteca","Cozinha","Entrada","Escritorio","Jardim De Inverno","Sala De Estar","Sala De Jantar","Sala De Musica","Salao De Jogos"};
 		String[] suspects = {"Green","Mustard","Peacock","Plum","Scarlet","White"};
 		
 		panel.add(new JLabel("Armas"));

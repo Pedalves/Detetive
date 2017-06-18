@@ -6,9 +6,13 @@ public class RoomCell extends Cell
 {
 	private HashMap<Integer, Integer[]> _posPlayers; 
 
-	public RoomCell(int[] upperLeft, int[] lowerRight) 
+	private String _name;
+	
+	public RoomCell(int[] upperLeft, int[] lowerRight, String name) 
 	{
 		super(upperLeft, lowerRight);
+		
+		_name = name;
 		
 		_posPlayers =  new HashMap<Integer, Integer[]>(); 
 		
@@ -29,5 +33,10 @@ public class RoomCell extends Cell
 	public int GetPosY(int numPlayer)
 	{
 		return _posPlayers.get(numPlayer)[1];
+	}
+	
+	public String getName()
+	{
+		return _name;
 	}
 }

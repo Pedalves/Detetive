@@ -78,7 +78,7 @@ public class GameView extends View
 		}
 		
 
-		_facade = new Facade(this, players);
+		_facade = Facade.getInstance(this, players);
 		
 		dice = new Dice();
 		
@@ -146,11 +146,26 @@ public class GameView extends View
 		showNotesButton.addActionListener(e -> {
 			new PlayerNotesView(_facade);
 		});
+		
+		JButton guessButton = new JButton("Fazer palpite");
+		guessButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		guessButton.addActionListener(e -> {
+			new GuessView(_facade);
+		});
 
+		JButton turnButton = new JButton("Fim do turno");
+		turnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		turnButton.addActionListener(e -> {
+			_facade.endTurn();
+			_currentPlayerName.setText("Current Player: " + _facade.getCurrentPlayerName());
+		});
+		
 		add(diceButton);
 		add(testWindowButton);
 		add(showCardsButton);
 		add(showNotesButton);
+		add(guessButton);
+		add(turnButton);
 	}
 
 	public void updatePlayer(int x, int y, int player) {
