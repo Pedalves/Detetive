@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import views.Card;
 import views.GameView;
 
 public class Facade implements MouseListener, Observer
@@ -19,11 +18,13 @@ public class Facade implements MouseListener, Observer
 	private Game _game;
 	private GameView _view;
 	
+	private boolean _gameEnded;
+	
 	private ArrayList<int[]> _availableCells;
 		
 	private Facade()
 	{
-		
+		_gameEnded = false;
 	}
 
 	static public Facade getInstance()
@@ -141,7 +142,14 @@ public class Facade implements MouseListener, Observer
 	
 	public String newAccusation(String[] accusation)
 	{
-		return _game.Accusation(accusation);
+		String result = _game.Accusation(accusation);
+		
+		if(result == "Acertou!")
+		{
+			_gameEnded = true;
+		}
+		
+		return result;
 	}
 	
 	public void endTurn()
@@ -160,5 +168,25 @@ public class Facade implements MouseListener, Observer
 	public void RepaintGameView()
 	{
 		_view.repaint();
+	}
+	
+	public void endGame()
+	{
+		if(_gameEnded)
+		{
+			_view.endGame();
+			_facade = null;
+		}
+		else
+		{
+			_game.newTurn();
+			RepaintGameView();
+		}
+	}
+	
+	public void forceEndGame()
+	{
+		_view.endGame();
+		_facade = null;
 	}
 }

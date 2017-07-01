@@ -120,7 +120,8 @@ public class Game extends Observable
 		{			
 			if(cont == _players.size())
 			{
-				Facade.getInstance().endGame();
+				Facade.getInstance().forceEndGame();
+				return;
 			}
 			cont++;
 			
@@ -501,9 +502,6 @@ public class Game extends Observable
 		{			
 			_players.get(_currentPlayer).setInGame(false);
 			
-			newTurn();
-			
-			Facade.getInstance().RepaintGameView();
 			return "Perdeu. Cartas certas: " + keyCards;
 		}
 		

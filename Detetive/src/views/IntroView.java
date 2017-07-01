@@ -49,6 +49,21 @@ public class IntroView extends View
 		}
 		observable.changePanel(this);
 	}
+	
+	public IntroView()
+	{
+		super();
+		
+		try
+		{
+			this.bgImage = ImageIO.read(new File("Images\\clue-box.jpg"));
+		}
+		catch(IOException e)
+		{
+			System.out.println("ERRO ao carregar imagem");
+		}
+		//observable.changePanel(this);
+	}
 
 	public void setupUI()
 	{		

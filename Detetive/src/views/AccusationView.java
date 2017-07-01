@@ -17,5 +17,6 @@ public class AccusationView  extends GenericSelectionView
 	{
 		JOptionPane.showMessageDialog(null,_facade.newAccusation(accusation));		
 		Facade.getInstance().endGame();
+		setVisible(false);
 	}
 }

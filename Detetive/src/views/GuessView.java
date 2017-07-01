@@ -34,6 +34,7 @@ public class GuessView extends GenericSelectionView
 	@Override
 	protected void confirmAction(String[] guess)
 	{
-		JOptionPane.showMessageDialog(null,_facade.newGuess(guess));		
+		JOptionPane.showMessageDialog(null,_facade.newGuess(guess));	
+		setVisible(false);
 	}
 }

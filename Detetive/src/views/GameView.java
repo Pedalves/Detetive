@@ -187,4 +187,9 @@ public class GameView extends View
 
 		repaint();
 	}
+	
+	public void endGame()
+	{
+		observable.changePanel(new IntroView());
+	}
 }
