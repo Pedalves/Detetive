@@ -8,7 +8,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import jogo.Card;
 import jogo.Facade;
 
 @SuppressWarnings("serial")
@@ -54,12 +53,6 @@ public class PlayerCardsView extends JFrame
 	
 	private void setupCardsImages()
 	{
-		List<Card> cards = _facade.getCurrentPlayerCards();
-		_images = new ArrayList<BufferedImage>();
-		
-		for(Card c : cards)
-		{
-			_images.add(c.Image);
-		}
+		_images = _facade.getCurrentPlayerCardsImages();
 	}
 }

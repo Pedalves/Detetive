@@ -2,12 +2,14 @@ package jogo;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import views.Card;
 import views.GameView;
 
 public class Facade implements MouseListener, Observer
@@ -100,9 +102,21 @@ public class Facade implements MouseListener, Observer
 		//_view.updatePlayer(args[0], args[1], args[2]);
 	}
 	
-	public List<Card> getCurrentPlayerCards()
+//	public List<Card> getCurrentPlayerCards()
+//	{
+//		return _game.getCurrentPlayerCards();
+//	}
+	
+	public List<BufferedImage> getCurrentPlayerCardsImages()
 	{
-		return _game.getCurrentPlayerCards();
+		List<Card> cards = _game.getCurrentPlayerCards();
+		List<BufferedImage> images = new ArrayList<BufferedImage>();
+		
+		for(Card c : cards)
+		{
+			images.add(c.Image);
+		}
+		return images;
 	}
 	
 	public List<String> getCurrentPlayerNotes()
