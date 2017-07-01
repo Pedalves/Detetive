@@ -508,4 +508,9 @@ public class Game extends Observable
 		//TODO: fim do jogo
 		return "Acertou!";
 	}
+	
+	public void resetGame()
+	{
+		_game = null;
+	}
 }

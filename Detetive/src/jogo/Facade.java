@@ -175,6 +175,7 @@ public class Facade implements MouseListener, Observer
 		if(_gameEnded)
 		{
 			_view.endGame();
+			_game.resetGame();
 			_facade = null;
 		}
 		else
@@ -187,6 +188,7 @@ public class Facade implements MouseListener, Observer
 	public void forceEndGame()
 	{
 		_view.endGame();
+		_game.resetGame();
 		_facade = null;
 	}
 }
