@@ -1,9 +1,7 @@
 package views;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

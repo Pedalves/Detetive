@@ -500,7 +500,6 @@ public class Game extends Observable
 		if(cont > 0)
 		{			
 			_players.get(_currentPlayer).setInGame(false);
-			//TODO: acabar jogo se todo mundo saiu do jogo
 			
 			newTurn();
 			
