@@ -475,9 +475,14 @@ public class Game extends Observable
 		
 		if(cont > 0)
 		{
+			_players.get(_currentPlayer).getCell().setOcuppied(false);
+			_players.remove(_currentPlayer);
+			
+			newTurn();
 			return "Perdeu. Cartas certas: " + keyCards;
 		}
 		
+		//TODO: fim do jogo
 		return "Acertou!";
 	}
 }
