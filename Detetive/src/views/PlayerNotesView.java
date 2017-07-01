@@ -14,7 +14,7 @@ public class PlayerNotesView extends JFrame
 {
 	private Facade _facade;
 	
-	public PlayerNotesView(Facade facade)
+	public PlayerNotesView()
 	{
 		super();
 		
@@ -23,7 +23,7 @@ public class PlayerNotesView extends JFrame
 		
 		setVisible(true);
 		
-		_facade = facade;
+		_facade = Facade.getInstance();
 		
 		setupNotes();
 	}

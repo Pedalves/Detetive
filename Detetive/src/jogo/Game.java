@@ -1,6 +1,5 @@
 package jogo;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -231,7 +230,10 @@ public class Game extends Observable
 				i++;
 			}
 			
-			//Montando quartos
+			/*************************************************************/
+			/***                  Montando quartos                     ***/
+			/*************************************************************/
+			
 			//Cozinha
 			int	roomUpperLeft[] = {50, 50}; 
 			int	roomLowerRight[] = {200, 200}; 
@@ -303,6 +305,9 @@ public class Game extends Observable
 			_gameCells.put(i, room9);
 			_board.addVertex(room9);
 			i++;
+			
+			/*************************************************************/
+
 			
 			fr2 = new FileReader("casa ligacao.txt");
 			br2 = new BufferedReader(fr2);

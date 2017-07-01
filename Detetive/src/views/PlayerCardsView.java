@@ -18,7 +18,7 @@ public class PlayerCardsView extends JFrame
 	
 	private List<BufferedImage> _images;
 	
-	public PlayerCardsView(Facade facade)
+	public PlayerCardsView()
 	{
 		super();
 		
@@ -27,7 +27,7 @@ public class PlayerCardsView extends JFrame
 		
 		setVisible(true);
 		
-		_facade = facade;
+		_facade = Facade.getInstance();
 		
 		setupCardsImages();
 		
