@@ -123,4 +123,9 @@ public class Deck
 		
 		return playersCards;
 	}
+	
+	public void resetDeck()
+	{
+		_deck = null;
+	}
 }

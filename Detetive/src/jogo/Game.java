@@ -511,6 +511,7 @@ public class Game extends Observable
 	
 	public void resetGame()
 	{
+		_deck.resetDeck();
 		_game = null;
 	}
 }
