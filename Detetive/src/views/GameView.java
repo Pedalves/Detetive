@@ -150,7 +150,13 @@ public class GameView extends View
 		JButton guessButton = new JButton("Fazer palpite");
 		guessButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		guessButton.addActionListener(e -> {
-			new GuessView(_facade);
+			new GuessView();
+		});
+		
+		JButton accusationButton = new JButton("Fazer acusacao");
+		accusationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		accusationButton.addActionListener(e -> {
+			new AccusationView();
 		});
 
 		JButton turnButton = new JButton("Fim do turno");
@@ -165,6 +171,7 @@ public class GameView extends View
 		add(showCardsButton);
 		add(showNotesButton);
 		add(guessButton);
+		add(accusationButton);
 		add(turnButton);
 	}
 

@@ -445,4 +445,34 @@ public class Game extends Observable
 		
 		return "Nenhum jogador possui as cartas do palpite";
 	}
+	
+	public String Accusation(String[] accusation)
+	{
+		int cont = 3;
+		String keyCards = "";
+		
+		for(Card c : _keyCards)
+		{
+			keyCards += c.GetName() + " ";
+			if(accusation[0] == c.GetName())
+			{
+				cont--;
+			}
+			else if(accusation[1] == c.GetName())
+			{
+				cont--;
+			}
+			else if(accusation[2] == c.GetName())
+			{
+				cont--;
+			}
+		}
+		
+		if(cont > 0)
+		{
+			return "Perdeu. Cartas certas: " + keyCards;
+		}
+		
+		return "Acertou!";
+	}
 }

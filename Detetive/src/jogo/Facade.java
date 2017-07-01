@@ -121,6 +121,11 @@ public class Facade implements MouseListener, Observer
 		return _game.guessResult(guess);
 	}
 	
+	public String newAccusation(String[] accusation)
+	{
+		return _game.Accusation(accusation);
+	}
+	
 	public void endTurn()
 	{
 		_game.newTurn();
