@@ -2,6 +2,8 @@ package views;
 
 import javax.swing.JOptionPane;
 
+import jogo.Facade;
+
 @SuppressWarnings("serial")
 public class AccusationView  extends GenericSelectionView
 {	
@@ -14,5 +16,6 @@ public class AccusationView  extends GenericSelectionView
 	protected void confirmAction(String[] accusation)
 	{
 		JOptionPane.showMessageDialog(null,_facade.newAccusation(accusation));		
+		Facade.getInstance().endGame();
 	}
 }
