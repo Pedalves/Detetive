@@ -16,7 +16,7 @@ public class PlayTestView extends JFrame
 {
 	private Facade _facade;
 	
-	public PlayTestView(Facade facade)
+	public PlayTestView()
 	{
 		super();
 		
@@ -25,7 +25,7 @@ public class PlayTestView extends JFrame
 		
 		setVisible(true);
 		
-		_facade = facade;
+		_facade = Facade.getInstance();
 		
 		setupWindow();
 	}

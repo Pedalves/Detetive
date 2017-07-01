@@ -19,25 +19,29 @@ public class Facade implements MouseListener, Observer
 	
 	private ArrayList<int[]> _availableCells;
 		
-	private Facade(GameView view, HashMap<Integer, Player> players)
+	private Facade()
 	{
-		_view = view;
-		_game = Game.getInstance(this, players);
+		
 	}
 
 	static public Facade getInstance()
 	{
-		return _facade;
-	}
-	
-	static public Facade getInstance(GameView view, HashMap<Integer, Player> players)
-	{
 		if(_facade == null)
 		{
-			_facade = new Facade(view, players);
+			_facade = new Facade();
 		}
 		
 		return _facade;
+	}
+	
+	public void setGameView(GameView view)
+	{
+		_view = view;
+	}
+	
+	public void addPlayers(HashMap<Integer, Player> players)
+	{
+		_game = Game.getInstance(this, players);
 	}
 	
 	public void newDiceValue(int val)

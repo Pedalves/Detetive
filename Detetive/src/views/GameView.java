@@ -77,8 +77,15 @@ public class GameView extends View
 			i++;
 		}
 		
-
-		_facade = Facade.getInstance(this, players);
+		/*************************************************************/
+		/***                  Initialize Facade                    ***/
+		/*************************************************************/
+		
+		_facade = Facade.getInstance();
+		_facade.setGameView(this);
+		_facade.addPlayers(players);
+		
+		/*************************************************************/
 		
 		dice = new Dice();
 		
@@ -132,19 +139,19 @@ public class GameView extends View
 		JButton testWindowButton = new JButton("Escolher valor do dado");
 		testWindowButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		testWindowButton.addActionListener(e -> {
-			new PlayTestView(_facade);
+			new PlayTestView();
 		});
 		
 		JButton showCardsButton = new JButton("Ver cartas");
 		showCardsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		showCardsButton.addActionListener(e -> {
-			new PlayerCardsView(_facade);
+			new PlayerCardsView();
 		});
 		
 		JButton showNotesButton = new JButton("Ver bloco de notas");
 		showNotesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		showNotesButton.addActionListener(e -> {
-			new PlayerNotesView(_facade);
+			new PlayerNotesView();
 		});
 		
 		JButton guessButton = new JButton("Fazer palpite");
