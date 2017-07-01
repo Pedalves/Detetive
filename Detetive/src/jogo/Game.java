@@ -106,9 +106,33 @@ public class Game extends Observable
 	public void newTurn()
 	{
 		if(_currentPlayer == _players.size() - 1)
+		{
 			_currentPlayer = 0;
+		}
 		else
+		{
 			_currentPlayer++;
+		}
+		
+		int cont = 0;
+		
+		while(!_players.get(_currentPlayer).getInGame())
+		{			
+			if(cont == _players.size())
+			{
+				Facade.getInstance().endGame();
+			}
+			cont++;
+			
+			if(_currentPlayer == _players.size() - 1)
+			{
+				_currentPlayer = 0;
+			}
+			else
+			{
+				_currentPlayer++;
+			}
+		}
 		
 		if(_players.get(getCurrentPlayer()).getCell() instanceof RoomCell)
 		{
@@ -474,9 +498,9 @@ public class Game extends Observable
 		}
 		
 		if(cont > 0)
-		{
-			_players.get(_currentPlayer).getCell().setOcuppied(false);
-			_players.remove(_currentPlayer);
+		{			
+			_players.get(_currentPlayer).setInGame(false);
+			//TODO: acabar jogo se todo mundo saiu do jogo
 			
 			newTurn();
 			

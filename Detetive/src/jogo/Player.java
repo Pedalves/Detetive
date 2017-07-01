@@ -16,6 +16,7 @@ public class Player
 	
 	private boolean _canWalk;
 	private boolean _canGuess;
+	private boolean _inGame;
 		
 	public Player(int x, int y, String name)
 	{
@@ -27,6 +28,7 @@ public class Player
 		
 		_canGuess = false;
 		_canWalk = true;
+		_inGame = true;
 	}
 	
 	public void setXY(int x, int y)
@@ -98,5 +100,15 @@ public class Player
 	public void setCanGuess(boolean canGuess)
 	{
 		_canGuess = canGuess;
+	}
+	
+	public boolean getInGame()
+	{
+		return _inGame;
+	}
+	
+	public void setInGame(boolean inGame)
+	{
+		_inGame = inGame;
 	}
 }
