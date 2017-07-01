@@ -479,6 +479,8 @@ public class Game extends Observable
 			_players.remove(_currentPlayer);
 			
 			newTurn();
+			
+			Facade.getInstance().RepaintGameView();
 			return "Perdeu. Cartas certas: " + keyCards;
 		}
 		

@@ -142,4 +142,9 @@ public class Facade implements MouseListener, Observer
 			_view.updatePlayer(newPosition[0], newPosition[1], newPosition[2]);
 		}
 	}
+	
+	public void RepaintGameView()
+	{
+		_view.repaint();
+	}
 }
