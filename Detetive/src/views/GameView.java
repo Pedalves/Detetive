@@ -93,7 +93,7 @@ public class GameView extends View implements Observer
 //				Stroke oldStroke = g2d.getStroke();
 //				g2d.setStroke(new BasicStroke(thickness));
 				g2d.setPaint(new Color(0.17f,0.64f,0.17f));
-				g2d.fillRect(pos[0], pos[1], 23, 23);
+				g2d.fillRect(pos[0]+1, pos[1]+1, 23, 23);
 //				g2d.setStroke(oldStroke);
 			}
 			_availableCellsPos = null;
