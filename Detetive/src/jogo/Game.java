@@ -49,27 +49,27 @@ class Game extends Observable
 			switch(gamePlayer)
 			{
 			case "green":
-				temp = new Player(400, 50, "Green", Color.green);
+				temp = new Player("Green", Color.green);
 				temp.setCell(_gameCells.get(183));
 				break;
 			case "mustard":
-				temp = new Player(50, 475, "Mustard", Color.yellow);
+				temp = new Player("Mustard", Color.yellow);
 				temp.setCell(_gameCells.get(185));
 				break;
 			case "peacock":
-				temp = new Player(625, 200, "Peacock", Color.blue);
+				temp = new Player("Peacock", Color.blue);
 				temp.setCell(_gameCells.get(184));
 				break;
 			case "plum":
-				temp = new Player(625, 525, "Plum", Color.magenta);
+				temp = new Player("Plum", Color.magenta);
 				temp.setCell(_gameCells.get(186));
 				break;
 			case "scarlet":
-				temp = new Player(225, 650, "Scarlet", Color.red);
+				temp = new Player("Scarlet", Color.red);
 				temp.setCell(_gameCells.get(187));
 				break;
 			case "white":
-				temp = new Player(275, 50, "White", Color.white);
+				temp = new Player("White", Color.white);
 				temp.setCell(_gameCells.get(182));
 				break;
 			}
@@ -95,6 +95,7 @@ class Game extends Observable
 	
 		_players = new HashMap<Integer, Player>();		
 		_deck = Deck.getInstance();
+		
 		load(savedGame);
 	}
 	
@@ -137,7 +138,7 @@ class Game extends Observable
 	{
 		for(int i = 0; i < _players.size(); i++)
 		{
-			int tempPos[] = {_players.get(i).getX(), _players.get(i).getY()};
+			int tempPos[] = {_players.get(i).getCell().getX(), _players.get(i).getCell().getY()};
 			
 			/*************************************************************/
 			/***                  Notify View                          ***/
@@ -638,8 +639,8 @@ class Game extends Observable
 				writer.println(Integer.toString(_players.get(i).getColor().getRGB()));
 				
 				// Salva coordenadas
-				writer.println(Integer.toString(_players.get(i).getX()));
-				writer.println(Integer.toString(_players.get(i).getY()));
+				writer.println(Integer.toString(_players.get(i).getCell().getX()));
+				writer.println(Integer.toString(_players.get(i).getCell().getY()));
 				
 				// Salva bloco de notas
 				String notes = "";
@@ -749,9 +750,16 @@ class Game extends Observable
 				int posX = Integer.parseInt(br.readLine());
 				int posY = Integer.parseInt(br.readLine());
 				
-				temp = new Player(posX, posY, name, color);
-				_players.put(i, temp);
-				i++;
+				temp = new Player(name, color);
+				
+				for(int cellIndex : _gameCells.keySet())
+				{
+					if(_gameCells.get(cellIndex).getX() == posX &&  _gameCells.get(cellIndex).getY() == posY)
+					{
+						_gameCells.get(cellIndex).setOcuppied(true);
+						temp.setCell(_gameCells.get(cellIndex));
+					}
+				}
 				
 				//Bloco de notas
 				String notes[] = br.readLine().split(";");
@@ -779,6 +787,9 @@ class Game extends Observable
 				temp.setCanWalk(Boolean.parseBoolean(br.readLine()));
 				temp.setCanGuess(Boolean.parseBoolean(br.readLine()));
 				temp.setInGame(Boolean.parseBoolean(br.readLine()));
+				
+				_players.put(i, temp);
+				i++;
 			}
 			
 			/*************************************************************/

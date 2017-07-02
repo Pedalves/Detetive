@@ -14,17 +14,12 @@ class Player
 	
 	private Color _color;
 	
-	private int _posX;
-	private int _posY;
-	
 	private boolean _canWalk;
 	private boolean _canGuess;
 	private boolean _inGame;
 		
-	public Player(int x, int y, String name, Color color)
+	public Player(String name, Color color)
 	{
-		_posX = x;
-		_posY = y;
 		_name = name;
 		
 		_color = color;
@@ -34,12 +29,6 @@ class Player
 		_canGuess = false;
 		_canWalk = true;
 		_inGame = true;
-	}
-	
-	public void setXY(int x, int y)
-	{
-		_posX = x;
-		_posY = y;
 	}
 	
 	public Player(Cell cell)
@@ -118,16 +107,6 @@ class Player
 	public void setInGame(boolean inGame)
 	{
 		_inGame = inGame;
-	}
-	
-	public int getX()
-	{
-		return _posX;
-	}
-	
-	public int getY()
-	{
-		return _posY;
 	}
 	
 	public Color getColor()
