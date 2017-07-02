@@ -1,17 +1,16 @@
 package jogo;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 import java.util.Observer;
 
 import views.GameView;
 
-public class Facade implements MouseListener, Observer
+public class Facade implements MouseListener
 {
 	static private Facade _facade;
 	
@@ -19,9 +18,7 @@ public class Facade implements MouseListener, Observer
 	private GameView _view;
 	
 	private boolean _gameEnded;
-	
-	private ArrayList<int[]> _availableCells;
-		
+			
 	private Facade()
 	{
 		_gameEnded = false;
@@ -39,12 +36,18 @@ public class Facade implements MouseListener, Observer
 	
 	public void setGameView(GameView view)
 	{
+		_game.addObserver(view);
 		_view = view;
 	}
 	
-	public void addPlayers(HashMap<Integer, Player> players)
+	public void addPlayers(ArrayList<String> players)
 	{
-		_game = Game.getInstance(this, players);
+		_game = Game.getInstance(players);
+	}
+	
+	public void initializePlayers()
+	{
+		_game.initializePlayers();
 	}
 	
 	public void newDiceValue(int val)
@@ -76,7 +79,7 @@ public class Facade implements MouseListener, Observer
 	{		
 		int newPosition[] = _game.newClickPosition(e.getX(), e.getY(), _game.getCurrentPlayer());
 		
-		updatePlayerPosition(newPosition);
+		updatePlayerPosition(_game.getCurrentPlayerColor(), newPosition);
 	}
 
 	@Override
@@ -84,29 +87,6 @@ public class Facade implements MouseListener, Observer
 		// TODO Auto-generated method stub
 		
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void update(Observable o, Object arg) 
-	{
-		Object[] args = (Object[])arg;
-		
-		switch((int)args[0])
-		{
-		// Update AvailableCells
-		case 1:
-			_availableCells = new ArrayList<>();
-			((ArrayList<int[]>)args[1]).forEach(_availableCells::add);
-			break;
-		}
-		
-		//_view.updatePlayer(args[0], args[1], args[2]);
-	}
-	
-//	public List<Card> getCurrentPlayerCards()
-//	{
-//		return _game.getCurrentPlayerCards();
-//	}
 	
 	public List<BufferedImage> getCurrentPlayerCardsImages()
 	{
@@ -157,11 +137,11 @@ public class Facade implements MouseListener, Observer
 		_game.newTurn();
 	}
 	
-	public void updatePlayerPosition(int[] newPosition)
+	public void updatePlayerPosition(Color color, int[] newPosition)
 	{
 		if(newPosition[0] != -1)
-		{
-			_view.updatePlayer(newPosition[0], newPosition[1], newPosition[2]);
+		{		
+			_view.updatePlayer(color, newPosition);
 		}
 	}
 	

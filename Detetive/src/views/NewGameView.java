@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
+import jogo.Facade;
+
 @SuppressWarnings("serial")
 public class NewGameView extends View implements ItemListener
 {	
@@ -50,7 +52,8 @@ public class NewGameView extends View implements ItemListener
 		
 		startButton = new JButton("Começar o jogo");
 		startButton.addActionListener(e -> {
-			observable.changePanel(new GameView(_selectedPlayers));
+			Facade.getInstance().addPlayers(_selectedPlayers);
+			observable.changePanel(new GameView());
 		});
 		startButton.setEnabled(false);
 		

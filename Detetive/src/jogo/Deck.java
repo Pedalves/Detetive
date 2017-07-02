@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class Deck
+class Deck
 {
 	static private Deck _deck;
 	

@@ -2,7 +2,7 @@ package jogo;
 
 import java.util.HashMap;
 
-public class RoomCell extends Cell
+class RoomCell extends Cell
 {
 	private HashMap<Integer, Integer[]> _posPlayers; 
 

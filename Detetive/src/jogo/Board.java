@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Board
+class Board
 {
 	private HashMap<Cell, LinkedList<Cell>> graph;
 	

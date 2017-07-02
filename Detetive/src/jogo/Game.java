@@ -1,5 +1,6 @@
 package jogo;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,9 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
-public class Game extends Observable
+class Game extends Observable
 {
 	static private Game _game; 
 	
@@ -24,57 +24,65 @@ public class Game extends Observable
 	private Deck _deck;
 	private List<Card> _keyCards;
 	
-	private Game(Observer observer, HashMap<Integer, Player> players)
-	{
-		_players = players;
-		_currentPlayer = 0;
-		
+	private Game(ArrayList<String> players)
+	{	
 		_board = new Board();
 		
 		_gameCells = new HashMap<Integer, Cell>();
 		_availableCells = null;
 		
 		setupBoard();
-		setupCards();
+	
+		_players = new HashMap<Integer, Player>();
 		
-		addObserver(observer);
+		int i = 0;
 		
-		for(int player : _players.keySet())
+		for(String gamePlayer:players)
 		{
-			switch(_players.get(player).PosX)
+			Player temp = null;
+			
+			switch(gamePlayer)
 			{
-			case 400:
-				_players.get(player).setCell(_gameCells.get(183));
+			case "green":
+				temp = new Player(400, 50, "Green", Color.green);
+				temp.setCell(_gameCells.get(183));
 				break;
-			case 50:
-				_players.get(player).setCell(_gameCells.get(185));
+			case "mustard":
+				temp = new Player(50, 475, "Mustard", Color.yellow);
+				temp.setCell(_gameCells.get(185));
 				break;
-			case 625:
-				if(_players.get(player).PosY == 200)
-				{
-					_players.get(player).setCell(_gameCells.get(184));
-					break;
-				}
-				else
-				{
-					_players.get(player).setCell(_gameCells.get(186));
-					break;
-				}
-			case 225:
-				_players.get(player).setCell(_gameCells.get(187));
+			case "peacock":
+				temp = new Player(625, 200, "Peacock", Color.blue);
+				temp.setCell(_gameCells.get(184));
 				break;
-			case 275:
-				_players.get(player).setCell(_gameCells.get(182));
+			case "plum":
+				temp = new Player(625, 525, "Plum", Color.magenta);
+				temp.setCell(_gameCells.get(186));
+				break;
+			case "scarlet":
+				temp = new Player(225, 650, "Scarlet", Color.red);
+				temp.setCell(_gameCells.get(187));
+				break;
+			case "white":
+				temp = new Player(275, 50, "White", Color.white);
+				temp.setCell(_gameCells.get(182));
 				break;
 			}
+			
+			_players.put(i, temp);
+			i++;
 		}
+		
+		_currentPlayer = 0;
+		
+		setupCards();
 	}
 	
-	static public Game getInstance(Observer observer, HashMap<Integer, Player> players)
+	static public Game getInstance(ArrayList<String> players)
 	{
 		if(_game == null)
 		{
-			_game = new Game(observer, players);
+			_game = new Game(players);
 		}
 		
 		return _game;
@@ -101,6 +109,15 @@ public class Game extends Observable
 	public int getCurrentPlayer()
 	{
 		return _currentPlayer;
+	}
+	
+	public void initializePlayers()
+	{
+		for(int i = 0; i < _players.size(); i++)
+		{
+			int tempPos[] = {_players.get(i).getX(), _players.get(i).getY()};
+			Facade.getInstance().updatePlayerPosition(_players.get(i).getColor(), tempPos);
+		}
 	}
 	
 	public void newTurn()
@@ -144,7 +161,7 @@ public class Game extends Observable
 	
 	public int[] newClickPosition(int x, int y, int player)
 	{
-		int xyPlayer[] = {-1, -1, -1};
+		int xyPlayer[] = {-1, -1};
 		
 		if(!_players.get(player).getCanWalk())
 		{
@@ -160,7 +177,7 @@ public class Game extends Observable
 				int temp[];
 				if(cell instanceof RoomCell)
 				{
-					temp = new int[] {((RoomCell)cell).GetPosX(player), ((RoomCell)cell).GetPosY(player), player};	
+					temp = new int[] {((RoomCell)cell).GetPosX(player), ((RoomCell)cell).GetPosY(player)};	
 					
 					if(_availableCells != null)
 					{
@@ -184,7 +201,7 @@ public class Game extends Observable
 				}
 				else
 				{
-					temp = new int[] {cell.getX(), cell.getY(), player};
+					temp = new int[] {cell.getX(), cell.getY()};
 					
 					if(_availableCells != null)
 					{
@@ -216,11 +233,11 @@ public class Game extends Observable
 	public void setDiceValue(int val)
 	{
 		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
+				
+		//Object infos[] = {(Object) 1, (Object)_availableCells.clone()}; 
 		
-		Object infos[] = {(Object) 1, (Object)_availableCells.clone()}; 
-		
-		setChanged();
-		notifyObservers((Object)infos);
+		//setChanged();
+		//notifyObservers((Object)infos);
 	}
 	
 	private void setupBoard()
@@ -412,6 +429,11 @@ public class Game extends Observable
 		return _players.get(getCurrentPlayer()).getName();
 	}
 	
+	public Color getCurrentPlayerColor()
+	{
+		return _players.get(getCurrentPlayer()).getColor();
+	}
+	
 	public String getCurrentPlayerRoom()
 	{
 		if(_players.get(getCurrentPlayer()).getCell() instanceof RoomCell)
@@ -439,7 +461,7 @@ public class Game extends Observable
 				ArrayList<int[]> cellsPositions = new ArrayList<int[]>();
 				cellsPositions.add(temp);
 				_availableCells = cellsPositions;
-				facade.updatePlayerPosition(newClickPosition(_players.get(getCurrentPlayer()).getCell().getX()+1, _players.get(getCurrentPlayer()).getCell().getY()+1, player));
+				facade.updatePlayerPosition(_players.get(player).getColor() ,newClickPosition(_players.get(getCurrentPlayer()).getCell().getX()+1, _players.get(getCurrentPlayer()).getCell().getY()+1, player));
 				break;
 			}
 		}
@@ -505,7 +527,6 @@ public class Game extends Observable
 			return "Perdeu. Cartas certas: " + keyCards;
 		}
 		
-		//TODO: fim do jogo
 		return "Acertou!";
 	}
 	

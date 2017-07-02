@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Card
+class Card
 {
 	public enum CardType
 	{

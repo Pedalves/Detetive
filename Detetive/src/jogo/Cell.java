@@ -1,6 +1,6 @@
 package jogo;
 
-public class Cell
+class Cell
 {
 //	public boolean Available = false;
 	

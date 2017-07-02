@@ -1,9 +1,10 @@
 package jogo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player 
+class Player 
 {
 	private Cell _cell;
 	
@@ -11,18 +12,22 @@ public class Player
 	private List<String> _notes;
 	private String _name;
 	
-	public int PosX;
-	public int PosY;
+	private Color _color;
+	
+	private int _posX;
+	private int _posY;
 	
 	private boolean _canWalk;
 	private boolean _canGuess;
 	private boolean _inGame;
 		
-	public Player(int x, int y, String name)
+	public Player(int x, int y, String name, Color color)
 	{
-		PosX = x;
-		PosY = y;
+		_posX = x;
+		_posY = y;
 		_name = name;
+		
+		_color = color;
 		
 		_notes = new ArrayList<String>();
 		
@@ -33,8 +38,8 @@ public class Player
 	
 	public void setXY(int x, int y)
 	{
-		PosX = x;
-		PosY = y;
+		_posX = x;
+		_posY = y;
 	}
 	
 	public Player(Cell cell)
@@ -110,5 +115,20 @@ public class Player
 	public void setInGame(boolean inGame)
 	{
 		_inGame = inGame;
+	}
+	
+	public int getX()
+	{
+		return _posX;
+	}
+	
+	public int getY()
+	{
+		return _posY;
+	}
+	
+	public Color getColor()
+	{
+		return _color;
 	}
 }

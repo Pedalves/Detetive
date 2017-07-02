@@ -8,8 +8,9 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -17,10 +18,9 @@ import javax.swing.JLabel;
 
 import jogo.Dice;
 import jogo.Facade;
-import jogo.Player;
 
 @SuppressWarnings("serial")
-public class GameView extends View 
+public class GameView extends View implements Observer
 {
 	private BufferedImage bgImage;
 	private String gameFile;
@@ -29,53 +29,14 @@ public class GameView extends View
 
 	private Facade _facade;
 
-	private HashMap<Integer, Player> players;
-	private HashMap<Integer, Color> _playersColors;
+	private HashMap<Color, int[]> _pawns;
 
 	private JLabel _currentPlayerName;
 	
-	public GameView(ArrayList<String> gamePlayers) {
+	public GameView() {
 		super();
 		
-		players = new HashMap<Integer, Player>();
-		_playersColors = new HashMap<Integer, Color>();
-		
-		int i = 0;
-		for(String gamePlayer:gamePlayers)
-		{
-			Player temp = null;
-			
-			switch(gamePlayer)
-			{
-			case "green":
-				temp = new Player(400, 50, "Green");
-				_playersColors.put(i, Color.green);
-				break;
-			case "mustard":
-				temp = new Player(50, 475, "Mustard");
-				_playersColors.put(i, Color.yellow);
-				break;
-			case "peacock":
-				temp = new Player(625, 200, "Peacock");
-				_playersColors.put(i, Color.blue);
-				break;
-			case "plum":
-				temp = new Player(625, 525, "Plum");
-				_playersColors.put(i, Color.magenta);
-				break;
-			case "scarlet":
-				temp = new Player(225, 650, "Scarlet");
-				_playersColors.put(i, Color.red);
-				break;
-			case "white":
-				temp = new Player(275, 50, "White");
-				_playersColors.put(i, Color.white);
-				break;
-			}
-			
-			players.put(i, temp);
-			i++;
-		}
+		_pawns = new HashMap<Color, int[]>();
 		
 		/*************************************************************/
 		/***                  Initialize Facade                    ***/
@@ -83,7 +44,7 @@ public class GameView extends View
 		
 		_facade = Facade.getInstance();
 		_facade.setGameView(this);
-		_facade.addPlayers(players);
+		_facade.initializePlayers();
 		
 		/*************************************************************/
 		
@@ -112,11 +73,11 @@ public class GameView extends View
 		super.paintComponent(g);
 		g.drawImage(bgImage, 0, 0, null);
 		
-		for(int player : players.keySet())
+		for(Color color : _pawns.keySet())
 		{
 			Graphics2D g2d = (Graphics2D) g;
-			Ellipse2D.Double circle = new Ellipse2D.Double(players.get(player).PosX, players.get(player).PosY, 23, 23);
-			g2d.setPaint(_playersColors.get(player));
+			Ellipse2D.Double circle = new Ellipse2D.Double(_pawns.get(color)[0], _pawns.get(color)[1], 23, 23);
+			g2d.setPaint(color);
 			g2d.fill(circle);
 		}
 		if (dice.PaintDice) {
@@ -182,14 +143,28 @@ public class GameView extends View
 		add(turnButton);
 	}
 
-	public void updatePlayer(int x, int y, int player) {
-		players.get(player).setXY(x, y);
-
+	public void updatePlayer(Color color, int[] pos) {
+		if(_pawns.containsKey(color))
+		{
+			_pawns.get(color)[0] = pos[0];
+			_pawns.get(color)[1] = pos[1];
+		}
+		else
+		{
+			_pawns.put(color, pos);
+		}
+		
 		repaint();
 	}
 	
 	public void endGame()
 	{
 		observable.changePanel(new IntroView());
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) 
+	{
+
 	}
 }
