@@ -642,7 +642,7 @@ class Game extends Observable
 				writer.println(_players.get(i).getName());
 				
 				// Salva cor
-				writer.println(_players.get(i).getColor().toString());
+				writer.println(Integer.toString(_players.get(i).getColor().getRGB()));
 				
 				// Salva coordenadas
 				writer.println(Integer.toString(_players.get(i).getX()));
