@@ -15,6 +15,9 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import jogo.Facade;
+
 import javax.imageio.ImageIO;
 
 import views.NewGameView;
@@ -83,7 +86,9 @@ public class IntroView extends View
 
 		    if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 		    {
-		       observable.changePanel(new GameView(chooser.getSelectedFile().getName()));
+		    	Facade.getInstance().loadGame(chooser.getSelectedFile().getName());
+		    	
+		       observable.changePanel(new GameView());
 		    }		
 		});
 		

@@ -2,10 +2,9 @@ package jogo;
 
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -615,9 +614,68 @@ class Game extends Observable
 		super.addObserver(o);
 	}
 	
-	public void save(File file)
+	public void save(String file)
 	{
-		
+		try {
+			PrintWriter writer = new PrintWriter(file, "UTF-8");
+			
+			// Salva cartas chave
+			for(Card c : _keyCards)
+			{
+				writer.println(c.GetName());
+			}
+			
+			// Salva qual o jogador corrente
+			writer.println(Integer.toString(_currentPlayer));
+			
+			// Salva jogadores
+			for(int i = 0; i<_players.size(); i++)
+			{
+				// Salva nome
+				writer.println(_players.get(i).getName());
+				
+				// Salva cor
+				writer.println(Integer.toString(_players.get(i).getColor().getRGB()));
+				
+				// Salva coordenadas
+				writer.println(Integer.toString(_players.get(i).getX()));
+				writer.println(Integer.toString(_players.get(i).getY()));
+				
+				// Salva bloco de notas
+				String notes = "";
+				
+				for(String note : _players.get(i).getNotes())
+				{
+					notes += note + ";";
+				}
+				
+				writer.println(notes);
+				
+				// Salva cartas
+				String cards = "";
+				
+				for(Card c : _players.get(i).getCards())
+				{
+					cards += c.GetName() + ";";
+				}
+				
+				writer.println(cards);
+				
+				// Salva se pode andar
+				writer.println(Boolean.toString(_players.get(i).getCanWalk()));
+				
+				// Salva se pode dar palpite
+				writer.println(Boolean.toString(_players.get(i).getCanGuess()));
+				
+				// Salva se esta no jogo
+				writer.println(Boolean.toString(_players.get(i).getInGame()));
+			}	
+			
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void load(String file)
