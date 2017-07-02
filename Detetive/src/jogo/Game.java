@@ -94,8 +94,7 @@ class Game extends Observable
 		setupBoard();
 	
 		_players = new HashMap<Integer, Player>();		
-		_deck = _deck.getInstance();
-		
+		_deck = Deck.getInstance();
 		load(savedGame);
 	}
 	
@@ -689,7 +688,7 @@ class Game extends Observable
 		
 		try 
 		{
-			fr = new FileReader("casa.txt");
+			fr = new FileReader(file);
 			br = new BufferedReader(fr);
 			
 			/* -keyCards
@@ -761,7 +760,7 @@ class Game extends Observable
 				{
 					if(note.length() > 3)
 					{
-						_players.get(i).addNote(note);	
+						temp.addNote(note);	
 					}	
 				}
 				
@@ -776,11 +775,11 @@ class Game extends Observable
 						playersCards.add(_deck.getCardByName(card));
 					}
 				}
-				_players.get(i).setCards(playersCards);
+				//temp.setCards(playersCards);
 				
-				_players.get(i).setCanWalk(Boolean.parseBoolean(br.readLine()));
-				_players.get(i).setCanGuess(Boolean.parseBoolean(br.readLine()));
-				_players.get(i).setInGame(Boolean.parseBoolean(br.readLine()));
+				temp.setCanWalk(Boolean.parseBoolean(br.readLine()));
+				temp.setCanGuess(Boolean.parseBoolean(br.readLine()));
+				temp.setInGame(Boolean.parseBoolean(br.readLine()));
 			}
 			
 			/*************************************************************/

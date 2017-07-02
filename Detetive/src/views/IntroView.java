@@ -86,7 +86,7 @@ public class IntroView extends View
 
 		    if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 		    {
-		    	Facade.getInstance().loadGame(chooser.getSelectedFile().getName());
+		    	Facade.getInstance().loadGame(chooser.getSelectedFile().getAbsolutePath());
 		    	
 		       observable.changePanel(new GameView());
 		    }		
