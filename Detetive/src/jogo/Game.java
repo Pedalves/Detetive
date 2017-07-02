@@ -250,10 +250,10 @@ class Game extends Observable
 	{
 		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
 				
-		//Object infos[] = {(Object) 1, (Object)_availableCells.clone()}; 
+		Object infos[] = {(Object) 2, (Object)_availableCells.clone()}; 
 		
-		//setChanged();
-		//notifyObservers((Object)infos);
+		setChanged();
+		notifyObservers((Object)infos);
 	}
 	
 	private void setupBoard()

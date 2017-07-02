@@ -1,14 +1,19 @@
 package views;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Stroke;
+import java.awt.color.ColorSpace;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,7 +38,10 @@ public class GameView extends View implements Observer
 
 	private JLabel _currentPlayerName;
 	
-	public GameView() {
+	private List<int[]> _availableCellsPos;
+	
+	public GameView() 
+	{
 		super();
 		
 		_pawns = new HashMap<Color, int[]>();
@@ -62,23 +70,42 @@ public class GameView extends View implements Observer
 		}
 	}
 
-	public GameView(String gameFile) {
+	public GameView(String gameFile) 
+	{
 		//this();
 
 		this.gameFile = gameFile;
 	}
 
 	@Override
-	protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g)
+	{
 		super.paintComponent(g);
 		g.drawImage(bgImage, 0, 0, null);
-		
+		Graphics2D g2d = (Graphics2D) g;
+
+		if(_availableCellsPos != null)
+		{
+			for(int[] pos : _availableCellsPos)
+			{
+				//Rectangle rect = new Rectangle(pos[0], pos[1], 23, 23);
+//				float thickness = 1.5f;
+//				Stroke oldStroke = g2d.getStroke();
+//				g2d.setStroke(new BasicStroke(thickness));
+				g2d.setPaint(new Color(0.17f,0.64f,0.17f));
+				g2d.fillRect(pos[0], pos[1], 23, 23);
+//				g2d.setStroke(oldStroke);
+			}
+			_availableCellsPos = null;
+		}
 		for(Color color : _pawns.keySet())
 		{
-			Graphics2D g2d = (Graphics2D) g;
 			Ellipse2D.Double circle = new Ellipse2D.Double(_pawns.get(color)[0], _pawns.get(color)[1], 23, 23);
 			g2d.setPaint(color);
 			g2d.fill(circle);
+			Ellipse2D.Double border = new Ellipse2D.Double(_pawns.get(color)[0]-1, _pawns.get(color)[1]-1, 25, 25);
+			g2d.setPaint(Color.BLACK);
+			g2d.draw(border);
 		}
 		if (dice.PaintDice) {
 			g.drawImage(dice.DiceImage1, 700, 200, null);
@@ -89,7 +116,8 @@ public class GameView extends View implements Observer
 	}
 
 	@Override
-	public void setupUI() {
+	public void setupUI() 
+	{
 		JButton diceButton = new JButton("Rolar dado");
 		diceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		diceButton.addActionListener(e -> {
@@ -143,7 +171,8 @@ public class GameView extends View implements Observer
 		add(turnButton);
 	}
 
-	private void updatePlayer(Color color, int[] pos) {
+	private void updatePlayer(Color color, int[] pos) 
+	{
 		if(_pawns.containsKey(color))
 		{
 			_pawns.get(color)[0] = pos[0];
@@ -162,6 +191,7 @@ public class GameView extends View implements Observer
 		observable.changePanel(new IntroView());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) 
 	{
@@ -174,6 +204,10 @@ public class GameView extends View implements Observer
 			break;
 		case 1:
 			updatePlayer((Color)args[1], (int[])args[2]);
+			break;
+		case 2:
+			_availableCellsPos = (List<int[]>) args[1];
+			break;
 		default:
 			break;
 		}
