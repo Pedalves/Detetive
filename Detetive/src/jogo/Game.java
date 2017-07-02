@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -621,6 +622,135 @@ class Game extends Observable
 	
 	private void load(String file)
 	{
+		BufferedReader br = null;
+		FileReader fr = null;
 		
+		BufferedReader br2 = null;
+		FileReader fr2 = null;
+		
+		try 
+		{
+			fr = new FileReader("casa.txt");
+			br = new BufferedReader(fr);
+			
+			/* -keyCards
+			 * -currentPlayer 
+			 * -Player:
+			 * - Posição
+			 * - Bloca de notas 
+			 * - Cartas
+			 * - Can Walk 
+			 * - Can Guess 
+			 * - InGame
+			 * */
+			
+			/*************************************************************/
+			/***                  Montando keyCards                    ***/
+			/*************************************************************/
+			
+			List<Card> cards = new ArrayList<Card>();
+			for(int cont = 0; cont < 3; cont++)
+			{
+				String keyCard = br.readLine();
+				cards.add(_deck.getCardByName(keyCard));
+			}
+			_keyCards = cards;
+			
+			/*************************************************************/
+			
+			/*************************************************************/
+			/***                  Pegando currentPlayer                ***/
+			/*************************************************************/
+			
+			_currentPlayer = Integer.parseInt(br.readLine());
+			
+			/*************************************************************/
+
+			/*************************************************************/
+			/***                  Montando players                     ***/
+			/*************************************************************/
+			int i = 0;
+			
+			String playersInfo;
+
+			while ((playersInfo = br.readLine()) != null)
+			{	
+				String name = playersInfo;
+				String[] params = playersInfo.split(" ");
+				
+				Player temp = null;
+				
+				//Pegando cor
+//				Color color;
+//				try {
+//					Field field = Class.forName("java.awt.Color").getField(params[1].toLowerCase());
+//				    color = (Color)field.get(null);
+//				} catch (Exception e) {
+//				    color = null; // Not defined
+//				}
+				Color color = new Color(Integer.parseInt(br.readLine()));
+				int posX = Integer.parseInt(br.readLine());
+				int posY = Integer.parseInt(br.readLine());
+				
+				temp = new Player(posX, posY, name, color);
+				_players.put(i, temp);
+				i++;
+				
+				//Bloco de notas
+				String notes[] = br.readLine().split(";");
+				for(String note : notes)
+				{
+					if(note.length() > 3)
+					{
+						_players.get(i).addNote(note);	
+					}	
+				}
+				
+				//Cartas
+				String playerCardsNames[] = br.readLine().split(";");
+				List<Card> playersCards = new ArrayList<Card>();
+				
+				for(String card : playerCardsNames)
+				{
+					if(card.length() > 3)
+					{
+						playersCards.add(_deck.getCardByName(card));
+					}
+				}
+				_players.get(i).setCards(playersCards);
+				
+				_players.get(i).setCanWalk(Boolean.parseBoolean(br.readLine()));
+				_players.get(i).setCanGuess(Boolean.parseBoolean(br.readLine()));
+				_players.get(i).setInGame(Boolean.parseBoolean(br.readLine()));
+			}
+			
+			/*************************************************************/
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			try
+			{
+				if (br != null)
+					br.close();
+
+				if (fr != null)
+					fr.close();
+				
+				if (br2 != null)
+					br2.close();
+
+				if (fr2 != null)
+					fr2.close();
+
+			} 
+			catch (IOException ex) 
+			{
+				ex.printStackTrace();
+			}
+		}
 	}
 }

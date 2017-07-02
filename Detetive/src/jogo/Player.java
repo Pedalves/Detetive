@@ -63,7 +63,10 @@ class Player
 		
 		for(Card c : _cards)
 		{
-			_notes.add(c.GetName());
+			if(!_notes.contains(c.GetName()))
+			{
+				_notes.add(c.GetName());
+			}
 		}
 	}
 	

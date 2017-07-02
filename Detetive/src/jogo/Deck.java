@@ -128,4 +128,17 @@ class Deck
 	{
 		_deck = null;
 	}
+	
+	public Card getCardByName(String name)
+	{
+		for(Card c : _cards)
+		{
+			if(c.GetName() == name)
+			{
+				return c;
+			}
+		}
+		
+		return null;
+	}
 }
