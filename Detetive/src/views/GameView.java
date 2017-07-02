@@ -25,7 +25,6 @@ import jogo.Facade;
 public class GameView extends View implements Observer
 {
 	private BufferedImage bgImage;
-	private String gameFile;
 
 	private Facade _facade;
 
@@ -63,13 +62,6 @@ public class GameView extends View implements Observer
 		} catch (IOException e) {
 			System.out.println("ERRO ao carregar imagem");
 		}
-	}
-
-	public GameView(String gameFile) 
-	{
-		//this();
-
-		this.gameFile = gameFile;
 	}
 
 	@Override
@@ -163,7 +155,7 @@ public class GameView extends View implements Observer
 
 		    if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 		    {	
-		    	String name = chooser.getSelectedFile().getName();
+		    	String name = chooser.getSelectedFile().getAbsolutePath();
 		    	_facade.saveGame(name);
 		    }
 		});
