@@ -3,6 +3,7 @@ package jogo;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
@@ -152,5 +153,10 @@ public class Facade implements MouseListener
 	{
 		_game.resetGame();
 		_facade = null;
+	}
+	
+	public void saveGame(String file)
+	{
+		_game.save(file);
 	}
 }

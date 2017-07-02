@@ -15,7 +15,9 @@ import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jogo.Facade;
 
@@ -152,6 +154,20 @@ public class GameView extends View implements Observer
 			_currentPlayerName.setText("Current Player: " + _facade.getCurrentPlayerName());
 		});
 		
+		JButton saveButton = new JButton("Salvar jogo");
+		saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		saveButton.addActionListener(e -> {
+			JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter("clue", "clue");
+		    chooser.setFileFilter(filter);
+
+		    if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+		    {	
+		    	String name = chooser.getSelectedFile().getName();
+		    	_facade.saveGame(name);
+		    }
+		});
+		
 		add(diceButton);
 		add(testWindowButton);
 		add(showCardsButton);
@@ -159,6 +175,7 @@ public class GameView extends View implements Observer
 		add(guessButton);
 		add(accusationButton);
 		add(turnButton);
+		add(saveButton);
 	}
 
 	private void updatePlayer(Color color, int[] pos) 
