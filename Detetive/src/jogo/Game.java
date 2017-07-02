@@ -618,6 +618,10 @@ class Game extends Observable
 	public void save(String file)
 	{
 		try {
+			if(!file.contains(".clue"))
+			{
+				file += ".clue";
+			}
 			PrintWriter writer = new PrintWriter(file, "UTF-8");
 			
 			// Salva cartas chave
@@ -695,12 +699,12 @@ class Game extends Observable
 			/* -keyCards
 			 * -currentPlayer 
 			 * -Player:
-			 * - Posição
-			 * - Bloca de notas 
-			 * - Cartas
-			 * - Can Walk 
-			 * - Can Guess 
-			 * - InGame
+			 * 	- Posição
+			 * 	- Bloca de notas 
+			 * 	- Cartas
+			 * 	- Can Walk 
+			 * 	- Can Guess 
+			 * 	- InGame
 			 * */
 			
 			/*************************************************************/
@@ -738,14 +742,6 @@ class Game extends Observable
 				
 				Player temp = null;
 				
-				//Pegando cor
-//				Color color;
-//				try {
-//					Field field = Class.forName("java.awt.Color").getField(params[1].toLowerCase());
-//				    color = (Color)field.get(null);
-//				} catch (Exception e) {
-//				    color = null; // Not defined
-//				}
 				Color color = new Color(Integer.parseInt(br.readLine()));
 				int posX = Integer.parseInt(br.readLine());
 				int posY = Integer.parseInt(br.readLine());
