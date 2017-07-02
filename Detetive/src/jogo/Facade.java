@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
-
 public class Facade implements MouseListener
 {
 	static private Facade _facade;

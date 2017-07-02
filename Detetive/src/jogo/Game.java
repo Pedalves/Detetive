@@ -469,9 +469,7 @@ class Game extends Observable
 		for(int player: _players.keySet())
 		{
 			if(guess[0] == _players.get(player).getName())
-			{
-				Facade facade = Facade.getInstance();
-				
+			{				
 				_players.get(player).setCanWalk(true);
 				int[] temp = {_players.get(getCurrentPlayer()).getCell().getX(), _players.get(getCurrentPlayer()).getCell().getY()};
 				ArrayList<int[]> cellsPositions = new ArrayList<int[]>();
