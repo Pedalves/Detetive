@@ -1,13 +1,9 @@
 package views;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.color.ColorSpace;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,7 +17,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import jogo.Dice;
 import jogo.Facade;
 
 @SuppressWarnings("serial")
@@ -30,8 +25,6 @@ public class GameView extends View implements Observer
 	private BufferedImage bgImage;
 	private String gameFile;
 
-	private Dice dice;
-
 	private Facade _facade;
 
 	private HashMap<Color, int[]> _pawns;
@@ -39,6 +32,8 @@ public class GameView extends View implements Observer
 	private JLabel _currentPlayerName;
 	
 	private List<int[]> _availableCellsPos;
+	
+	private BufferedImage[] _diceImages;
 	
 	public GameView() 
 	{
@@ -55,9 +50,7 @@ public class GameView extends View implements Observer
 		_facade.initializePlayers();
 		
 		/*************************************************************/
-		
-		dice = new Dice();
-		
+				
 		_currentPlayerName = new JLabel("Current Player: " + _facade.getCurrentPlayerName());
 		add(_currentPlayerName);
 
@@ -88,13 +81,8 @@ public class GameView extends View implements Observer
 		{
 			for(int[] pos : _availableCellsPos)
 			{
-				//Rectangle rect = new Rectangle(pos[0], pos[1], 23, 23);
-//				float thickness = 1.5f;
-//				Stroke oldStroke = g2d.getStroke();
-//				g2d.setStroke(new BasicStroke(thickness));
 				g2d.setPaint(new Color(0.17f,0.64f,0.17f));
 				g2d.fillRect(pos[0]+1, pos[1]+1, 23, 23);
-//				g2d.setStroke(oldStroke);
 			}
 			_availableCellsPos = null;
 		}
@@ -107,9 +95,11 @@ public class GameView extends View implements Observer
 			g2d.setPaint(Color.BLACK);
 			g2d.draw(border);
 		}
-		if (dice.PaintDice) {
-			g.drawImage(dice.DiceImage1, 700, 200, null);
-			g.drawImage(dice.DiceImage2, 800, 200, null);
+		if (_diceImages != null) 
+		{
+			g.drawImage(_diceImages[0], 700, 200, null);
+			g.drawImage(_diceImages[1], 800, 200, null);
+			_diceImages = null;
 		}
 		
 		_currentPlayerName.setText("Current Player: " + _facade.getCurrentPlayerName());
@@ -121,7 +111,7 @@ public class GameView extends View implements Observer
 		JButton diceButton = new JButton("Rolar dado");
 		diceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		diceButton.addActionListener(e -> {
-			_facade.newDiceValue(dice.RollDice());
+			_facade.rollDice();
 			repaint();
 		});
 
@@ -207,6 +197,9 @@ public class GameView extends View implements Observer
 			break;
 		case 2:
 			_availableCellsPos = (List<int[]>) args[1];
+			break;
+		case 3:
+			_diceImages = (BufferedImage[]) args[1];
 			break;
 		default:
 			break;

@@ -50,6 +50,11 @@ public class Facade implements MouseListener
 		_game.setDiceValue(val);
 	}
 	
+	public void rollDice()
+	{
+		_game.setDiceValue(0);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

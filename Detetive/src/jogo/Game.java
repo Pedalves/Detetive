@@ -23,10 +23,13 @@ class Game extends Observable
 	
 	private Deck _deck;
 	private List<Card> _keyCards;
+
+	private Dice _dice;
 	
 	private Game(ArrayList<String> players)
 	{	
 		_board = new Board();
+		_dice = new Dice();
 		
 		_gameCells = new HashMap<Integer, Cell>();
 		_availableCells = null;
@@ -253,12 +256,19 @@ class Game extends Observable
 			return;
 		}
 		
+		if(val == 0)
+		{
+			val = _dice.RollDice();
+			Object diceImages[] = {(Object) 3, (Object)_dice.getDiceImages()};
+			setChanged();
+			notifyObservers((Object)diceImages);
+		}
 		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
 				
-		Object infos[] = {(Object) 2, (Object)_availableCells.clone()}; 
+		Object cellInfos[] = {(Object) 2, (Object)_availableCells.clone()}; 
 		
 		setChanged();
-		notifyObservers((Object)infos);
+		notifyObservers((Object)cellInfos);
 	}
 	
 	private void setupBoard()

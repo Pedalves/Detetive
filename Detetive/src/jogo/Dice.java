@@ -11,9 +11,8 @@ import javax.imageio.ImageIO;
 
 public class Dice 
 {
-	public boolean PaintDice = false;
-	public BufferedImage DiceImage1;
-	public BufferedImage DiceImage2;
+	private BufferedImage _diceImage1;
+	private BufferedImage _diceImage2;
 	
 	private BufferedImage[] diceImages;
 	
@@ -36,53 +35,58 @@ public class Dice
 	
 	public int RollDice()
 	{
-		PaintDice = true;
 		int num1 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
 		int num2 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
 		switch (num1){
 			case 1:
-				DiceImage1 = diceImages[0];
+				_diceImage1 = diceImages[0];
 				break;
 			case 2:
-				DiceImage1 = diceImages[1];
+				_diceImage1 = diceImages[1];
 				break;
 			case 3:
-				DiceImage1 = diceImages[2];
+				_diceImage1 = diceImages[2];
 				break;
 			case 4:
-				DiceImage1 = diceImages[3];
+				_diceImage1 = diceImages[3];
 				break;
 			case 5:
-				DiceImage1 = diceImages[4];
+				_diceImage1 = diceImages[4];
 				break;
 			case 6:
-				DiceImage1 = diceImages[5];
+				_diceImage1 = diceImages[5];
 				break;
 			default:
 				break;
 		}
 		switch (num2){
-		case 1:
-			DiceImage2 = diceImages[0];
-			break;
-		case 2:
-			DiceImage2 = diceImages[1];
-			break;
-		case 3:
-			DiceImage2 = diceImages[2];
-			break;
-		case 4:
-			DiceImage2 = diceImages[3];
-			break;
-		case 5:
-			DiceImage2 = diceImages[4];
-			break;
-		case 6:
-			DiceImage2 = diceImages[5];
-			break;
-		default:
-			break;
-	}
+			case 1:
+				_diceImage2 = diceImages[0];
+				break;
+			case 2:
+				_diceImage2 = diceImages[1];
+				break;
+			case 3:
+				_diceImage2 = diceImages[2];
+				break;
+			case 4:
+				_diceImage2 = diceImages[3];
+				break;
+			case 5:
+				_diceImage2 = diceImages[4];
+				break;
+			case 6:
+				_diceImage2 = diceImages[5];
+				break;
+			default:
+				break;
+		}
 		return num1 + num2; 
+	}
+	
+	public BufferedImage[] getDiceImages()
+	{
+		BufferedImage[] imgs = {_diceImage1,_diceImage2};
+		return imgs;
 	}
 }
