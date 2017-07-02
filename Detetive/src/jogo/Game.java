@@ -734,7 +734,6 @@ class Game extends Observable
 			while ((playersInfo = br.readLine()) != null)
 			{	
 				String name = playersInfo;
-				String[] params = playersInfo.split(" ");
 				
 				Player temp = null;
 				
@@ -775,7 +774,7 @@ class Game extends Observable
 						playersCards.add(_deck.getCardByName(card));
 					}
 				}
-				//temp.setCards(playersCards);
+				temp.setCards(playersCards);
 				
 				temp.setCanWalk(Boolean.parseBoolean(br.readLine()));
 				temp.setCanGuess(Boolean.parseBoolean(br.readLine()));

@@ -133,7 +133,8 @@ class Deck
 	{
 		for(Card c : _cards)
 		{
-			if(c.GetName() == name)
+			String cardName = c.GetName();
+			if(cardName.equals(name))
 			{
 				return c;
 			}
