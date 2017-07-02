@@ -3,13 +3,14 @@ package jogo;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 
 //import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
-public class Dice 
+class Dice extends Observable
 {
 	private BufferedImage _diceImage1;
 	private BufferedImage _diceImage2;
@@ -81,10 +82,19 @@ public class Dice
 			default:
 				break;
 		}
+		
+		/*************************************************************/
+		/***                  Notify View                          ***/
+		/*************************************************************/
+		
+		Object diceImages[] = {(Object) 3, (Object)getDiceImages()};
+		setChanged();
+		notifyObservers((Object)diceImages);
+		
 		return num1 + num2; 
 	}
 	
-	public BufferedImage[] getDiceImages()
+	private BufferedImage[] getDiceImages()
 	{
 		BufferedImage[] imgs = {_diceImage1,_diceImage2};
 		return imgs;

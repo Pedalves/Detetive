@@ -2,12 +2,14 @@ package jogo;
 
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 class Game extends Observable
 {
@@ -81,11 +83,36 @@ class Game extends Observable
 		setupCards();
 	}
 	
+	private Game(String savedGame)
+	{	
+		_board = new Board();
+		_dice = new Dice();
+		
+		_gameCells = new HashMap<Integer, Cell>();
+		_availableCells = null;
+		
+		setupBoard();
+	
+		_players = new HashMap<Integer, Player>();		
+		
+		load(savedGame);
+	}
+	
 	static public Game getInstance(ArrayList<String> players)
 	{
 		if(_game == null)
 		{
 			_game = new Game(players);
+		}
+		
+		return _game;
+	}
+	
+	static public Game getInstance(String savedGame)
+	{
+		if(_game == null)
+		{
+			_game = new Game(savedGame);
 		}
 		
 		return _game;
@@ -101,14 +128,6 @@ class Game extends Observable
 		return _game;
 	}
 	
-	public void addPlayers(String players[])
-	{		
-		for(int i = 0; i < players.length; i++)
-		{	
-			//_players.put(i, new Player());
-		}
-	}
-	
 	public int getCurrentPlayer()
 	{
 		return _currentPlayer;
@@ -119,6 +138,10 @@ class Game extends Observable
 		for(int i = 0; i < _players.size(); i++)
 		{
 			int tempPos[] = {_players.get(i).getX(), _players.get(i).getY()};
+			
+			/*************************************************************/
+			/***                  Notify View                          ***/
+			/*************************************************************/
 			
 			Object args[] = {(Object) 1, (Object)_players.get(i).getColor(), (Object)tempPos}; 
 			
@@ -165,7 +188,10 @@ class Game extends Observable
 		}
 		_players.get(_currentPlayer).setCanWalk(true);
 		
-		//-----------------------------------------------------------------------------
+		/*************************************************************/
+		/***                  Notify View                          ***/
+		/*************************************************************/
+		
 		Object args[] = {(Object) 5}; 
 		
 		setChanged();
@@ -242,6 +268,10 @@ class Game extends Observable
 		
 		if(xyPlayer[0] != -1)
 		{	
+			/*************************************************************/
+			/***                  Notify View                          ***/
+			/*************************************************************/
+			
 			Object args[] = {(Object) 1, (Object)_players.get(player).getColor(), (Object)xyPlayer}; 
 			
 			setChanged();
@@ -259,12 +289,13 @@ class Game extends Observable
 		if(val == 0)
 		{
 			val = _dice.RollDice();
-			Object diceImages[] = {(Object) 3, (Object)_dice.getDiceImages()};
-			setChanged();
-			notifyObservers((Object)diceImages);
 		}
 		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
-				
+			
+		/*************************************************************/
+		/***                  Notify View                          ***/
+		/*************************************************************/
+		
 		Object cellInfos[] = {(Object) 2, (Object)_availableCells.clone()}; 
 		
 		setChanged();
@@ -564,11 +595,32 @@ class Game extends Observable
 	{
 		_deck.resetDeck();
 		
+		/*************************************************************/
+		/***                  Notify View                          ***/
+		/*************************************************************/
+		
 		Object args[] = {(Object) 0}; 
 		
 		setChanged();
 		notifyObservers(args);
 		
 		_game = null;
+	}
+	
+	@Override
+	public void addObserver(Observer o)
+	{
+		_dice.addObserver(o);
+		super.addObserver(o);
+	}
+	
+	public void save(File file)
+	{
+		
+	}
+	
+	private void load(String file)
+	{
+		
 	}
 }

@@ -78,9 +78,9 @@ public class IntroView extends View
 		continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		continueButton.addActionListener(e -> {
 			JFileChooser chooser = new JFileChooser();
-		    FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter("clue", "clue");
 		    chooser.setFileFilter(filter);
-		    
+
 		    if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 		    {
 		       observable.changePanel(new GameView(chooser.getSelectedFile().getName()));
