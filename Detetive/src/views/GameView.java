@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
@@ -14,6 +15,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -167,6 +169,7 @@ public class GameView extends View implements Observer
 		add(guessButton);
 		add(accusationButton);
 		add(turnButton);
+		add(Box.createRigidArea(new Dimension(650, 0)));
 		add(saveButton);
 	}
 

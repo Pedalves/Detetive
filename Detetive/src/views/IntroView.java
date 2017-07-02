@@ -65,7 +65,6 @@ public class IntroView extends View
 		{
 			System.out.println("ERRO ao carregar imagem");
 		}
-		//observable.changePanel(this);
 	}
 
 	public void setupUI()
