@@ -143,7 +143,7 @@ public class GameView extends View implements Observer
 		add(turnButton);
 	}
 
-	public void updatePlayer(Color color, int[] pos) {
+	private void updatePlayer(Color color, int[] pos) {
 		if(_pawns.containsKey(color))
 		{
 			_pawns.get(color)[0] = pos[0];
@@ -157,7 +157,7 @@ public class GameView extends View implements Observer
 		repaint();
 	}
 	
-	public void endGame()
+	private void endGame()
 	{
 		observable.changePanel(new IntroView());
 	}
@@ -165,6 +165,19 @@ public class GameView extends View implements Observer
 	@Override
 	public void update(Observable o, Object arg) 
 	{
-
+		Object args[] = (Object[])arg;
+		
+		switch((int)args[0])
+		{
+		case 0:
+			endGame();
+			break;
+		case 1:
+			updatePlayer((Color)args[1], (int[])args[2]);
+		default:
+			break;
+		}
+		
+		repaint();
 	}
 }

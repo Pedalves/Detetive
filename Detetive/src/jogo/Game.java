@@ -116,7 +116,11 @@ class Game extends Observable
 		for(int i = 0; i < _players.size(); i++)
 		{
 			int tempPos[] = {_players.get(i).getX(), _players.get(i).getY()};
-			Facade.getInstance().updatePlayerPosition(_players.get(i).getColor(), tempPos);
+			
+			Object args[] = {(Object) 1, (Object)_players.get(i).getColor(), (Object)tempPos}; 
+			
+			setChanged();
+			notifyObservers(args);
 		}
 	}
 	
@@ -157,15 +161,21 @@ class Game extends Observable
 			_players.get(_currentPlayer).setCanGuess(true); 
 		}
 		_players.get(_currentPlayer).setCanWalk(true);
+		
+		//-----------------------------------------------------------------------------
+		Object args[] = {(Object) 5}; 
+		
+		setChanged();
+		notifyObservers(args);
 	}
 	
-	public int[] newClickPosition(int x, int y, int player)
+	public void newClickPosition(int x, int y, int player)
 	{
 		int xyPlayer[] = {-1, -1};
 		
 		if(!_players.get(player).getCanWalk())
 		{
-			return xyPlayer;
+			return;
 		}
 		
 		for(int pos : _gameCells.keySet())
@@ -227,7 +237,13 @@ class Game extends Observable
 			}
 		}
 		
-		return xyPlayer;
+		if(xyPlayer[0] != -1)
+		{	
+			Object args[] = {(Object) 1, (Object)_players.get(player).getColor(), (Object)xyPlayer}; 
+			
+			setChanged();
+			notifyObservers(args);
+		}		
 	}
 	
 	public void setDiceValue(int val)
@@ -461,7 +477,8 @@ class Game extends Observable
 				ArrayList<int[]> cellsPositions = new ArrayList<int[]>();
 				cellsPositions.add(temp);
 				_availableCells = cellsPositions;
-				facade.updatePlayerPosition(_players.get(player).getColor() ,newClickPosition(_players.get(getCurrentPlayer()).getCell().getX()+1, _players.get(getCurrentPlayer()).getCell().getY()+1, player));
+				
+				newClickPosition(_players.get(getCurrentPlayer()).getCell().getX()+1, _players.get(getCurrentPlayer()).getCell().getY()+1, player);
 				break;
 			}
 		}
@@ -533,6 +550,12 @@ class Game extends Observable
 	public void resetGame()
 	{
 		_deck.resetDeck();
+		
+		Object args[] = {(Object) 0}; 
+		
+		setChanged();
+		notifyObservers(args);
+		
 		_game = null;
 	}
 }

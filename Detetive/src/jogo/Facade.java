@@ -1,6 +1,5 @@
 package jogo;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -8,14 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
-import views.GameView;
 
 public class Facade implements MouseListener
 {
 	static private Facade _facade;
 	
 	private Game _game;
-	private GameView _view;
 	
 	private boolean _gameEnded;
 			
@@ -34,10 +31,9 @@ public class Facade implements MouseListener
 		return _facade;
 	}
 	
-	public void setGameView(GameView view)
+	public void setGameView(Observer view)
 	{
 		_game.addObserver(view);
-		_view = view;
 	}
 	
 	public void addPlayers(ArrayList<String> players)
@@ -77,9 +73,7 @@ public class Facade implements MouseListener
 	@Override
 	public void mousePressed(MouseEvent e)
 	{		
-		int newPosition[] = _game.newClickPosition(e.getX(), e.getY(), _game.getCurrentPlayer());
-		
-		updatePlayerPosition(_game.getCurrentPlayerColor(), newPosition);
+		_game.newClickPosition(e.getX(), e.getY(), _game.getCurrentPlayer());		
 	}
 
 	@Override
@@ -137,37 +131,21 @@ public class Facade implements MouseListener
 		_game.newTurn();
 	}
 	
-	public void updatePlayerPosition(Color color, int[] newPosition)
-	{
-		if(newPosition[0] != -1)
-		{		
-			_view.updatePlayer(color, newPosition);
-		}
-	}
-	
-	public void RepaintGameView()
-	{
-		_view.repaint();
-	}
-	
 	public void endGame()
 	{
 		if(_gameEnded)
 		{
-			_view.endGame();
 			_game.resetGame();
 			_facade = null;
 		}
 		else
 		{
 			_game.newTurn();
-			RepaintGameView();
 		}
 	}
 	
 	public void forceEndGame()
 	{
-		_view.endGame();
 		_game.resetGame();
 		_facade = null;
 	}
