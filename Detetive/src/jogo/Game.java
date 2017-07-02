@@ -653,7 +653,7 @@ class Game extends Observable
 				
 				for(String note : _players.get(i).getNotes())
 				{
-					notes += note + ", ";
+					notes += note + ";";
 				}
 				
 				writer.println(notes);
@@ -663,7 +663,7 @@ class Game extends Observable
 				
 				for(Card c : _players.get(i).getCards())
 				{
-					cards += c.GetName() + ", ";
+					cards += c.GetName() + ";";
 				}
 				
 				writer.println(cards);
