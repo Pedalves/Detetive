@@ -94,6 +94,7 @@ class Game extends Observable
 		setupBoard();
 	
 		_players = new HashMap<Integer, Player>();		
+		_deck = _deck.getInstance();
 		
 		load(savedGame);
 	}
