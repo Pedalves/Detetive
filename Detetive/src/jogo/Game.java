@@ -248,6 +248,11 @@ class Game extends Observable
 	
 	public void setDiceValue(int val)
 	{
+		if(!_players.get(_currentPlayer).getCanWalk())
+		{
+			return;
+		}
+		
 		_availableCells = _board.getAvailableCells(val, _players.get(_currentPlayer).getCell());
 				
 		Object infos[] = {(Object) 2, (Object)_availableCells.clone()}; 

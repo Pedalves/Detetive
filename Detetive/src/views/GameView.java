@@ -103,7 +103,7 @@ public class GameView extends View implements Observer
 			Ellipse2D.Double circle = new Ellipse2D.Double(_pawns.get(color)[0], _pawns.get(color)[1], 23, 23);
 			g2d.setPaint(color);
 			g2d.fill(circle);
-			Ellipse2D.Double border = new Ellipse2D.Double(_pawns.get(color)[0]-1, _pawns.get(color)[1]-1, 25, 25);
+			Ellipse2D.Double border = new Ellipse2D.Double(_pawns.get(color)[0], _pawns.get(color)[1], 23, 23);
 			g2d.setPaint(Color.BLACK);
 			g2d.draw(border);
 		}
