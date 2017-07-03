@@ -138,7 +138,16 @@ class Game extends Observable
 	{
 		for(int i = 0; i < _players.size(); i++)
 		{
-			int tempPos[] = {_players.get(i).getCell().getX(), _players.get(i).getCell().getY()};
+			int tempPos[];
+			Cell cell = _players.get(i).getCell(); 
+			if(cell instanceof RoomCell)
+			{
+				tempPos = new int[] {((RoomCell)cell).GetPosX(i), ((RoomCell)cell).GetPosY(i)};	
+			}
+			else
+			{
+				tempPos = new int[]{cell.getX(), cell.getY()};
+			}
 			
 			/*************************************************************/
 			/***                  Notify View                          ***/
@@ -374,7 +383,7 @@ class Game extends Observable
 			//Salão de jogos
 			int	roomUpperLeft5[] = {500, 250}; 
 			int	roomLowerRight5[] = {650, 375};
-			RoomCell room5 = new RoomCell(roomUpperLeft5, roomLowerRight5, "Salão De Jogos");
+			RoomCell room5 = new RoomCell(roomUpperLeft5, roomLowerRight5, "Salao De Jogos");
 			_gameCells.put(i, room5);
 			_board.addVertex(room5);
 			i++;
